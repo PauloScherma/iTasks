@@ -16,5 +16,41 @@ namespace iTasks
         {
             InitializeComponent();
         }
+
+        //botões que abrem outros forms
+        #region
+        private void tarefasTerminadasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas();
+            frmConsultarTarefasConcluidas.Show();
+        }
+
+        private void tarefasEmCursoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso();
+            frmConsultaTarefasEmCurso.Show();
+        }
+
+        private void gerirUtilizadoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmGereUtilizadores frmGereUtilizadores = new frmGereUtilizadores();
+            frmGereUtilizadores.Show();
+        }
+
+        private void gerirTiposDeTarefasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmGereTiposTarefas frmGereTiposTarefas = new frmGereTiposTarefas();
+            frmGereTiposTarefas.Show();
+        }
+        #endregion
+
+        //função para verificar a saida
+        private void frmKanban_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Tem a certeza que queres sair?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+                e.Cancel = true;
+        }
     }
 }

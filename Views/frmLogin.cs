@@ -16,5 +16,12 @@ namespace iTasks
         {
             InitializeComponent();
         }
+
+        private void btLogin_Click(object sender, EventArgs e)
+        {
+            frmKanban frmKanban = new frmKanban();
+            frmKanban.Show();
+            this.Close();
+        }
     }
 }

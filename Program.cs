@@ -16,7 +16,9 @@ namespace iTasks
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmLogin());
+            frmLogin frmLogin = new frmLogin();
+            frmLogin.Show(); 
+            Application.Run();
         }
     }
 }
