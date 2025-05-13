@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {
+    //definir colunas na tabela
     public class TipoTarefa
     {
         public int Id { get; set; }

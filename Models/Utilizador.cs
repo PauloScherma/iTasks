@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {
-    public class Utilizador
+    //definir colunas na tabela
+    public abstract class Utilizador
     {
         public int id {  get; set; }
         public string nome { get; set; }

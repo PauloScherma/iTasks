@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {
-    public class Gestor
+    //definir o enum()
+    public enum Departamento
     {
-        public char Departamento { get; set; }
+        IT, 
+        Marketing,
+        Administração
+    }
+
+    //definir colunas na tabela
+    public class Gestor : Utilizador
+    {
+        public Departamento Departamento { get; set; }
         public int GereUtilizadores { get; set; } //ver melhor qual o "tipo"
     }
 }

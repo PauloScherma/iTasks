@@ -6,10 +6,22 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {
-    public class Programador
+    /*duvidas
+    - Como faço para pegar o Id do gestor que preciso
+    */
+
+    //definir o enum()
+    public enum NivelExperiencia
     {
-        public int NivelExperiencia {  get; set; }
+        Junior,
+        Senior
+    }
+
+    //definir colunas na tabela
+    public class Programador : Utilizador
+    {
+        public NivelExperiencia NivelExperiencia {  get; set; } 
         //chave estrangeira
-        public Gestor IdGestor { get; set; }
+        public Utilizador IdGestor { get; set; }
     }
 }
