@@ -10,13 +10,22 @@ namespace iTasks
 {
     public class frmLoginController
     {
-        //atribuição de dados
-        public void addToDataBase()
+        //verifica se o username e a palavra pass estão corretos
+        public static bool usernameLogin(string username, string password)
         {
             using (var db = new ITaskContext())
             {
+                
+                var queryOneUser = from user in db.Utilizadores
+                               where user.Username == username && user.Password == password
+                               select user;
 
-                db.SaveChanges();
+                foreach(Utilizador utilizador in queryOneUser)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

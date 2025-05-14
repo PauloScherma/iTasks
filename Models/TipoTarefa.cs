@@ -10,6 +10,6 @@ namespace iTasks.Models
     public class TipoTarefa
     {
         public int Id { get; set; }
-        public int Nome { get; set; }
+        public string Nome { get; set; }
     }
 }

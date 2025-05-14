@@ -19,8 +19,8 @@ namespace iTasks
             //atribuição de dados
             using (var db = new ITaskContext())
             {
-                var gestor = new Gestor { nome = "admin", username = "admin", password = "admin" };
-                db.Utilizadores.Add(gestor);
+                var admin = new Gestor { Nome = "admin", Username = "admin", Password = "admin", Departamento = Departamento.Administração, GereUtilizadores = true };
+                db.Utilizadores.Add(admin);
 
                 db.SaveChanges();
             }

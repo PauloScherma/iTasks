@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {   
+    //definição do enum
     public enum EstadoAtual
     {
         ToDo, 

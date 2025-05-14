@@ -22,6 +22,6 @@ namespace iTasks.Models
     {
         public NivelExperiencia NivelExperiencia {  get; set; } 
         //chave estrangeira
-        public Utilizador IdGestor { get; set; }
+        public Gestor Gestor { get; set; }
     }
 }
