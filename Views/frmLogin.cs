@@ -19,9 +19,21 @@ namespace iTasks
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-            frmKanban frmKanban = new frmKanban();
-            frmKanban.Show();
-            this.Close();
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            bool verificacao = frmLoginController.usernameLogin(username, password);
+
+            if(verificacao)
+            {
+                frmKanban frmKanban = new frmKanban();
+                frmKanban.Show(); 
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Tente outra vez", "Dados inválidos");
+            }
         }
     }
 }
