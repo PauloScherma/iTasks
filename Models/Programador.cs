@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace iTasks.Models
 {
-    /*duvidas
-    - Como faço para pegar o Id do gestor que preciso
-    */
 
     //definir o enum()
     public enum NivelExperiencia

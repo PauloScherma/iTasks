@@ -22,12 +22,22 @@ namespace iTasks
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            bool verificacao = frmLoginController.usernameLogin(username, password);
+            bool verification = frmLoginController.userLogin(username, password);
 
-            if(verificacao)
+
+            //verifica se o utilizador se consegue entrar
+            if (verification)
             {
                 frmKanban frmKanban = new frmKanban();
-                frmKanban.Show(); 
+                frmKanban.Show();
+
+                string typeOfUser =frmLoginController.typeOfUser(username, password);
+
+                //verifica se é gestor ou programador e mostra a view correspondente
+                if (true) 
+                {
+
+                }
                 this.Close();
             }
             else
