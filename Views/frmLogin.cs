@@ -25,7 +25,7 @@ namespace iTasks
             bool verification = frmLoginController.userLogin(username, password);
 
 
-            //verifica se o utilizador se consegue entrar
+            //verifica se o utilizador consegue entrar
             if (verification)
             {
                 frmKanban frmKanban = new frmKanban();
@@ -34,9 +34,13 @@ namespace iTasks
                 string typeOfUser =frmLoginController.typeOfUser(username, password);
 
                 //verifica se é gestor ou programador e mostra a view correspondente
-                if (true) 
+                if (typeOfUser == "Gestor") 
                 {
-
+                    //gestor
+                }
+                else if(typeOfUser == "Programador")
+                {
+                    //programador
                 }
                 this.Close();
             }

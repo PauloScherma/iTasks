@@ -26,14 +26,14 @@ namespace iTasks
         {
             using (var db = new ITaskContext())
             {
-                var typeOfUser = from user in db.Utilizadores
-                                   where user.Username == username && user.Password == password
-                                   select user;
+                var typeOfUser = (from user in db.Utilizadores
+                                  where user.Username == username && user.Password == password
+                                  select user).FirstOrDefault();
 
-                //ver melhor, corrigir 
-                string userType = typeOfUser.GetType().Name;
-                
-                return userType;
+                var typeName = typeOfUser.GetType().BaseType.Name;
+
+                return typeName;
+
             }
         }
     }
