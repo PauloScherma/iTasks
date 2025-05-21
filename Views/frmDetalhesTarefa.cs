@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTasks.Controllers;
+using iTasks.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,23 @@ namespace iTasks
         public frmDetalhesTarefa()
         {
             InitializeComponent();
+        }
+
+        private void gravarDadosButton_Click(object sender, EventArgs e)
+        {
+            // Atribuição de valores as variaveis
+            string descricao = txtDesc.Text;
+            TipoTarefa IdTipoTarefa = null;
+            Utilizador IdProgramador = null;
+            int OrdemExecucao = (int)nUpDownOrdem.Value;
+            int StoryPoints = (int)nUpDownStoryPoints.Value;
+            DateTime DataPrevistaInicio = dtInicio.Value;
+            DateTime DataPrevistaFim = dtFim.Value;
+
+            // Chama o método gravarDados do controlador para salvar os dados
+            frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints);
+
+            this.Close();
         }
     }
 }

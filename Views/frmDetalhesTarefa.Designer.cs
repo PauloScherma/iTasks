@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbProgramador = new System.Windows.Forms.ComboBox();
-            this.txtOrdem = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtDesc = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,10 +51,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btGravar = new System.Windows.Forms.Button();
+            this.gravarDadosButton = new System.Windows.Forms.Button();
             this.btFechar = new System.Windows.Forms.Button();
-            this.txtStoryPoints = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.nUpDownOrdem = new System.Windows.Forms.NumericUpDown();
+            this.nUpDownStoryPoints = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownOrdem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownStoryPoints)).BeginInit();
             this.SuspendLayout();
             // 
             // txtId
@@ -91,13 +93,6 @@
             this.cbProgramador.Name = "cbProgramador";
             this.cbProgramador.Size = new System.Drawing.Size(311, 21);
             this.cbProgramador.TabIndex = 6;
-            // 
-            // txtOrdem
-            // 
-            this.txtOrdem.Location = new System.Drawing.Point(132, 192);
-            this.txtOrdem.Name = "txtOrdem";
-            this.txtOrdem.Size = new System.Drawing.Size(62, 20);
-            this.txtOrdem.TabIndex = 9;
             // 
             // label2
             // 
@@ -220,9 +215,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(23, 71);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 13);
+            this.label10.Size = new System.Drawing.Size(92, 13);
             this.label10.TabIndex = 22;
-            this.label10.Text = "Data Real de Início:";
+            this.label10.Text = "Data Real de Fim:";
             // 
             // txtDataCriacao
             // 
@@ -257,14 +252,15 @@
             this.panel2.Size = new System.Drawing.Size(559, 2);
             this.panel2.TabIndex = 27;
             // 
-            // btGravar
+            // gravarDadosButton
             // 
-            this.btGravar.Location = new System.Drawing.Point(316, 317);
-            this.btGravar.Name = "btGravar";
-            this.btGravar.Size = new System.Drawing.Size(141, 23);
-            this.btGravar.TabIndex = 28;
-            this.btGravar.Text = "Gravar Dados";
-            this.btGravar.UseVisualStyleBackColor = true;
+            this.gravarDadosButton.Location = new System.Drawing.Point(316, 317);
+            this.gravarDadosButton.Name = "gravarDadosButton";
+            this.gravarDadosButton.Size = new System.Drawing.Size(141, 23);
+            this.gravarDadosButton.TabIndex = 28;
+            this.gravarDadosButton.Text = "Gravar Dados";
+            this.gravarDadosButton.UseVisualStyleBackColor = true;
+            this.gravarDadosButton.Click += new System.EventHandler(this.gravarDadosButton_Click);
             // 
             // btFechar
             // 
@@ -275,13 +271,6 @@
             this.btFechar.Text = "Fechar";
             this.btFechar.UseVisualStyleBackColor = true;
             // 
-            // txtStoryPoints
-            // 
-            this.txtStoryPoints.Location = new System.Drawing.Point(132, 218);
-            this.txtStoryPoints.Name = "txtStoryPoints";
-            this.txtStoryPoints.Size = new System.Drawing.Size(62, 20);
-            this.txtStoryPoints.TabIndex = 31;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -291,15 +280,30 @@
             this.label12.TabIndex = 30;
             this.label12.Text = "StoryPoints:";
             // 
+            // nUpDownOrdem
+            // 
+            this.nUpDownOrdem.Location = new System.Drawing.Point(132, 195);
+            this.nUpDownOrdem.Name = "nUpDownOrdem";
+            this.nUpDownOrdem.Size = new System.Drawing.Size(62, 20);
+            this.nUpDownOrdem.TabIndex = 32;
+            // 
+            // nUpDownStoryPoints
+            // 
+            this.nUpDownStoryPoints.Location = new System.Drawing.Point(132, 219);
+            this.nUpDownStoryPoints.Name = "nUpDownStoryPoints";
+            this.nUpDownStoryPoints.Size = new System.Drawing.Size(62, 20);
+            this.nUpDownStoryPoints.TabIndex = 33;
+            // 
             // frmDetalhesTarefa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(575, 366);
-            this.Controls.Add(this.txtStoryPoints);
+            this.Controls.Add(this.nUpDownStoryPoints);
+            this.Controls.Add(this.nUpDownOrdem);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btFechar);
-            this.Controls.Add(this.btGravar);
+            this.Controls.Add(this.gravarDadosButton);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtDataCriacao);
@@ -318,7 +322,6 @@
             this.Controls.Add(this.cbTipoTarefa);
             this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtOrdem);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbProgramador);
@@ -326,6 +329,8 @@
             this.Controls.Add(this.label1);
             this.Name = "frmDetalhesTarefa";
             this.Text = "frmDetalhesTarefa";
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownOrdem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nUpDownStoryPoints)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,7 +342,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbProgramador;
-        private System.Windows.Forms.TextBox txtOrdem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDesc;
         private System.Windows.Forms.Label label4;
@@ -357,9 +361,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btGravar;
+        private System.Windows.Forms.Button gravarDadosButton;
         private System.Windows.Forms.Button btFechar;
-        private System.Windows.Forms.TextBox txtStoryPoints;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown nUpDownOrdem;
+        private System.Windows.Forms.NumericUpDown nUpDownStoryPoints;
     }
 }

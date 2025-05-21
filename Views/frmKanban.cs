@@ -42,6 +42,7 @@ namespace iTasks
             frmGereTiposTarefas frmGereTiposTarefas = new frmGereTiposTarefas();
             frmGereTiposTarefas.Show();
         }
+
         #endregion
 
         //função para verificar a saida
@@ -51,6 +52,12 @@ namespace iTasks
 
             if (result == DialogResult.No)
                 e.Cancel = true;
+        }
+
+        private void novaTarefaButton_Click(object sender, EventArgs e)
+        {
+            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
+            frmDetalhesTarefa.Show();
         }
     }
 }
