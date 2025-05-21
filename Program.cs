@@ -9,18 +9,23 @@ namespace iTasks
 {
     internal static class Program
     {
-
-        /// <summary>
-        /// Ponto de entrada principal para o aplicativo.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            //atribuição de dados
+            //criar base de dados
             using (var db = new ITaskContext())
             {
+                //definir admin
                 var admin = new Gestor { Nome = "admin", Username = "admin", Password = "admin", Departamento = Departamento.Administração, GereUtilizadores = true };
                 db.Utilizadores.Add(admin);
+                //definir gestores
+                var paulo = new Gestor { Nome = "paulo", Username = "paulo", Password = "paulo", Departamento = Departamento.Administração, GereUtilizadores = false };
+                db.Utilizadores.Add(paulo);
+                //definir programadores
+                var gestorDoProgramador = db.Gestores.FirstOrDefault(g => g.Username == "admin");
+                // como definir o id do gestor do programador?
+                var miguel = new Programador { Nome = "miguel", Username = "miguel", Password = "miguel", NivelExperiencia = NivelExperiencia.Junior, Gestor = gestorDoProgramador };
+                db.Utilizadores.Add(miguel);
 
                 db.SaveChanges();
             }

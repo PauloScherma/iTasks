@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTasks.Controllers;
+using iTasks.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,45 @@ namespace iTasks
 {
     public partial class frmKanban : Form
     {
-        public frmKanban()
+        Utilizador userLogin = null;
+
+        public frmKanban(string username, string password)
         {
             InitializeComponent();
+
+            //atribuimos o tipo do utilizador logado à variavel
+            string typeOfUser = frmKanbanController.typeOfUser(username, password);
+
+            //verifica se é gestor ou programador e mostra a view correspondente
+            if (typeOfUser == "Gestor")
+            {
+                //define o userLogin
+                userLogin = frmKanbanController.gestorLogedIn(username);
+                //atribui o nome do utilizador à label
+                labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
+                //gestor dos getores
+                if (((Gestor)userLogin).GereUtilizadores)
+                {
+                    //ver se é preciso
+                }
+                //gestor dos programadores
+                else
+                {
+                    //escoder coisas
+                    gerirUtilizadoresToolStripMenuItem.Visible = false;
+                }
+            }
+            //programador
+            else if (typeOfUser == "Programador")
+            {
+                //define o userLogin
+                userLogin = frmKanbanController.programadorLogedIn(username);
+                //atribui o nome do utilizador à label
+                labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
+                //escoder coisas
+                btNova.Hide();
+                utilizadoresToolStripMenuItem.Visible = false;
+            }
         }
 
         //botões que abrem outros forms

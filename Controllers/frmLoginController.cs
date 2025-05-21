@@ -11,21 +11,13 @@ namespace iTasks
     public class frmLoginController
     {
         //verifica se o username e a palavra pass estão corretos
-        public static bool usernameLogin(string username, string password)
+        public static bool userValidation(string username, string password)
         {
             using (var db = new ITaskContext())
             {
-                
-                var queryOneUser = from user in db.Utilizadores
-                               where user.Username == username && user.Password == password
-                               select user;
+                var userValidation = db.Utilizadores.Any(user => user.Username == username && user.Password == password);
 
-                foreach(Utilizador utilizador in queryOneUser)
-                {
-                    return true;
-                }
-
-                return false;
+                return userValidation;
             }
         }
     }

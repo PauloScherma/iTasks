@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iTasks.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,12 +23,16 @@ namespace iTasks
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            bool verificacao = frmLoginController.usernameLogin(username, password);
+            //chama funcao para ver se o utilizador existe
+            bool verification = frmLoginController.userValidation(username, password);
 
-            if(verificacao)
+
+            //verifica se o utilizador consegue entrar
+            if (verification)
             {
-                frmKanban frmKanban = new frmKanban();
-                frmKanban.Show(); 
+                frmKanban frmKanban = new frmKanban(username, password);
+                this.Hide();
+                frmKanban.ShowDialog();
                 this.Close();
             }
             else
