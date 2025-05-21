@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iTasks.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,26 +23,16 @@ namespace iTasks
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            bool verification = frmLoginController.userLogin(username, password);
+            //chama funcao para ver se o utilizador existe
+            bool verification = frmLoginController.userValidation(username, password);
 
 
             //verifica se o utilizador consegue entrar
             if (verification)
             {
-                frmKanban frmKanban = new frmKanban();
-                frmKanban.Show();
-
-                string typeOfUser =frmLoginController.typeOfUser(username, password);
-
-                //verifica se é gestor ou programador e mostra a view correspondente
-                if (typeOfUser == "Gestor") 
-                {
-                    //gestor
-                }
-                else if(typeOfUser == "Programador")
-                {
-                    //programador
-                }
+                frmKanban frmKanban = new frmKanban(username, password);
+                this.Hide();
+                frmKanban.ShowDialog();
                 this.Close();
             }
             else

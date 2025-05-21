@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\frmKanbanController.cs" />
     <Compile Include="Controllers\frmLoginController.cs" />
     <Compile Include="Models\Gestor.cs" />
     <Compile Include="Models\ITaskContext.cs" />
