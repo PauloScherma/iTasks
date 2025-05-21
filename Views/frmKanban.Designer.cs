@@ -48,7 +48,7 @@
             this.btSetDone = new System.Windows.Forms.Button();
             this.btSetTodo = new System.Windows.Forms.Button();
             this.btNova = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelNomeUtilizador = new System.Windows.Forms.Label();
             this.btPrevisao = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -245,15 +245,15 @@
             this.btNova.Text = "Nova Tarefa";
             this.btNova.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // labelNomeUtilizador
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1037, 42);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 16);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Bem vindo: <Nome Utilizador>";
+            this.labelNomeUtilizador.AutoSize = true;
+            this.labelNomeUtilizador.Location = new System.Drawing.Point(1037, 42);
+            this.labelNomeUtilizador.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelNomeUtilizador.Name = "labelNomeUtilizador";
+            this.labelNomeUtilizador.Size = new System.Drawing.Size(187, 16);
+            this.labelNomeUtilizador.TabIndex = 9;
+            this.labelNomeUtilizador.Text = "Bem vindo: <Nome Utilizador>";
             // 
             // btPrevisao
             // 
@@ -271,7 +271,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1257, 661);
             this.Controls.Add(this.btPrevisao);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelNomeUtilizador);
             this.Controls.Add(this.btNova);
             this.Controls.Add(this.btSetTodo);
             this.Controls.Add(this.btSetDone);
@@ -317,7 +317,7 @@
         private System.Windows.Forms.Button btSetDone;
         private System.Windows.Forms.Button btSetTodo;
         private System.Windows.Forms.Button btNova;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelNomeUtilizador;
         private System.Windows.Forms.Button btPrevisao;
     }
 }
