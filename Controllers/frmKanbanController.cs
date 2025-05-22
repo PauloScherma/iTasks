@@ -10,7 +10,7 @@ namespace iTasks.Controllers
 {
     class frmKanbanController
     {
-
+        //verifica qual o tipo do utilizador (Gestor)
         public static Gestor gestorLogedIn(string username)
         {
             //pega no utilizador que está logado
@@ -24,6 +24,7 @@ namespace iTasks.Controllers
                 return gestorLogedIn;
             }
         }
+        //verifica qual o tipo do utilizador (Programador)
         public static Programador programadorLogedIn(string username)
         {
             //pega no utilizador que está logado
@@ -38,12 +39,12 @@ namespace iTasks.Controllers
             }
         }
         //verifica qual o tipo do utilizador (Gestor ou Programador)
-        public static string typeOfUser(string username, string password)
+        public static string typeOfUser(string username)
         {
             using (var db = new ITaskContext())
             {
                 var typeOfUser = (from user in db.Utilizadores
-                                  where user.Username == username && user.Password == password
+                                  where user.Username == username
                                   select user).FirstOrDefault();
 
                 var typeName = typeOfUser.GetType().Name;

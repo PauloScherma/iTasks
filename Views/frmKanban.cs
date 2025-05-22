@@ -15,13 +15,14 @@ namespace iTasks
     public partial class frmKanban : Form
     {
         Utilizador userLogin = null;
+        string username = null;
 
-        public frmKanban(string username, string password)
+        public frmKanban(string username)
         {
             InitializeComponent();
 
             //atribuimos o tipo do utilizador logado à variavel
-            string typeOfUser = frmKanbanController.typeOfUser(username, password);
+            string typeOfUser = frmKanbanController.typeOfUser(username);
 
             //verifica se é gestor ou programador e mostra a view correspondente
             if (typeOfUser == "Gestor")
@@ -39,7 +40,6 @@ namespace iTasks
                 else
                 {
                     //escoder coisas
-                    gerirUtilizadoresToolStripMenuItem.Visible = false;
                 }
             }
             //programador
@@ -53,10 +53,14 @@ namespace iTasks
                 btNova.Hide();
                 utilizadoresToolStripMenuItem.Visible = false;
             }
+
+            // Assign the username from the logged-in user
+            this.username = userLogin.Username;
         }
 
         //botões que abrem outros forms
         #region
+
         private void tarefasTerminadasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas();
@@ -71,7 +75,7 @@ namespace iTasks
 
         private void gerirUtilizadoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmGereUtilizadores frmGereUtilizadores = new frmGereUtilizadores();
+            frmGereUtilizadores frmGereUtilizadores = new frmGereUtilizadores(username);
             frmGereUtilizadores.Show();
         }
 

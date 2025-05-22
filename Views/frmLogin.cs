@@ -30,7 +30,7 @@ namespace iTasks
             //verifica se o utilizador consegue entrar
             if (verification)
             {
-                frmKanban frmKanban = new frmKanban(username, password);
+                frmKanban frmKanban = new frmKanban(username);
                 this.Hide();
                 frmKanban.ShowDialog();
                 this.Close();
