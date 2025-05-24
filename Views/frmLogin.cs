@@ -37,7 +37,7 @@ namespace iTasks
             }
             else
             {
-                MessageBox.Show("Tente outra vez", "Dados inválidos");
+                MessageBox.Show("Dados inválidos tente outra vez", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
