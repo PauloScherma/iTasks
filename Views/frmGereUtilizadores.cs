@@ -101,7 +101,7 @@ namespace iTasks
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
         {
-            if () { 
+            if (true) { 
             //atribui valores
             string nomeProg = txtNomeProg.Text.Trim();
             string usernameProg = txtUsernameProg.Text.Trim();
@@ -112,6 +112,72 @@ namespace iTasks
             //cria o programador
             frmGereUtilizadoresController.criarProg(nomeProg, usernameProg, passProg, nivelProg, gestorProg);
             }
+        }
+
+        private void lstListaGestores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //porque fica com 0? não devia ser -1 -> problema no SelectedIndexChanged?
+            int indexSelecionado = lstListaGestores.SelectedIndex;
+
+            if (indexSelecionado != -1) 
+            {
+                //pega o gestor selecionado na lista
+                Gestor gestorSelecionado = (Gestor)lstListaGestores.SelectedItem;
+
+                //atribui os valores do gestor selecionado aos campos
+                txtIdGestor.Text = gestorSelecionado.Id.ToString();
+                txtNomeGestor.Text = gestorSelecionado.Nome;
+                txtUsernameGestor.Text = gestorSelecionado.Username;
+                txtPasswordGestor.Text = gestorSelecionado.Password;
+                cbDepartamento.SelectedItem = gestorSelecionado.Departamento;
+
+                bool gereGestor = gestorSelecionado.GereUtilizadores;
+                if(gereGestor)
+                {
+                    chkGereUtilizadores.Checked = true;
+                }
+                else
+                {
+                    chkGereUtilizadores.Checked = false;
+                }
+            }
+        }
+
+        private void lstListaProgramadores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //porque fica com 0? não devia ser -1 -> problema no SelectedIndexChanged?
+            int indexSelecionado = lstListaProgramadores.SelectedIndex;
+
+            if (indexSelecionado != -1)
+            {
+                //pega o gestor selecionado na lista
+                Programador progSelecionado = (Programador)lstListaProgramadores.SelectedItem;
+
+                //atribui os valores do gestor selecionado aos campos
+                txtIdProg.Text = progSelecionado.Id.ToString();
+                txtNomeProg.Text = progSelecionado.Nome;
+                txtUsernameProg.Text = progSelecionado.Username;
+                txtPasswordProg.Text = progSelecionado.Password;
+                cbNivelProg.SelectedItem = progSelecionado.NivelExperiencia;
+                //cbGestorProg.SelectedValue = progSelecionado.GestorId;
+            }
+        }
+
+        //excluir gestor
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int indexSelecionado = lstListaGestores.SelectedIndex;
+            Gestor gestorSelecionado = (Gestor)lstListaGestores.SelectedItem;
+            int IdGestor = gestorSelecionado.Id;
+            frmGereUtilizadoresController.excluirGestor(IdGestor);
+        }
+        //excluir programador
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int indexSelecionado = lstListaProgramadores.SelectedIndex;
+            Programador progSelecionado = (Programador)lstListaProgramadores.SelectedItem;
+            int IdProg = progSelecionado.Id;
+            frmGereUtilizadoresController.excluirProgramador(IdProg);
         }
     }
 }
