@@ -406,7 +406,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmGereUtilizadores";
             this.Text = "frmListaUtilizadores";
-            this.Load += new System.EventHandler(this.frmGereUtilizadores_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

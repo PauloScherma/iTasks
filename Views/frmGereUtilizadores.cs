@@ -22,8 +22,6 @@ namespace iTasks
             InitializeComponent();
             //atribuimos o tipo do utilizador logado à variavel
             string typeOfUser = frmKanbanController.typeOfUser(username);
-            //atributos do forms
-            
 
             //verifica se é gestor ou programador e mostra a view correspondente
             if (typeOfUser == "Gestor")
@@ -34,40 +32,50 @@ namespace iTasks
                 //gestor dos getores
                 if (((Gestor)userLogin).GereUtilizadores)
                 {
-                    using (var db = new ITaskContext())
-                    {
-                        //mostrar na comboBox o enum Departamento
-                        cbDepartamento.DataSource = Enum.GetValues(typeof(Departamento));
-                        cbDepartamento.SelectedIndex = -1;
+                    //mostrar na comboBox o enum Departamento
+                    cbDepartamento.DataSource = frmGereUtilizadoresController.mostrarDepartamentos();
+                    cbDepartamento.SelectedIndex = -1;
 
-                        //mostrar na comboBox o enum NivelExperiencia
-                        cbNivelProg.DataSource = Enum.GetValues(typeof(NivelExperiencia));
-                        cbNivelProg.SelectedIndex = -1;
+                    //mostrar na comboBox o enum NivelExperiencia
+                    cbNivelProg.DataSource = frmGereUtilizadoresController.mostrarNivelExperiencia();
+                    cbNivelProg.SelectedIndex = -1;
 
-                        //mostrar na comboBox os Gestores
-                        var allGestorList = db.Gestores.ToList();
-                        cbGestorProg.DataSource = allGestorList;
-                        cbGestorProg.DisplayMember = "Nome";      
-                        cbGestorProg.ValueMember = "Id";
-                        cbGestorProg.SelectedIndex = -1;
-                    }
+                    //mostrar na comboBox os Gestores
+                    cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+                    cbGestorProg.DisplayMember = "Nome";
+                    cbGestorProg.ValueMember = "Id";
+                    cbGestorProg.SelectedIndex = -1;
+
+                    //mostra a lista de gestores
+                    lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
+                    lstListaGestores.DisplayMember = "Nome";
+                    lstListaGestores.ValueMember = "Id";
+                    lstListaGestores.SelectedIndex = -1;
+
+                    //mostra a lista de programadores
+                    lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
+                    lstListaProgramadores.DisplayMember = "Nome";
+                    lstListaProgramadores.ValueMember = "Id";
+                    lstListaProgramadores.SelectedIndex = -1;
                 }
                 //gestor dos programadores
                 else
                 {
-                    using (var db = new ITaskContext())
-                    {
-                        //mostrar na comboBox o enum NivelExperiencia
-                        cbNivelProg.DataSource = Enum.GetValues(typeof(NivelExperiencia));
-                        cbNivelProg.SelectedIndex = -1;
+                    //mostrar na comboBox o enum NivelExperiencia
+                    cbNivelProg.DataSource = frmGereUtilizadoresController.mostrarNivelExperiencia();
+                    cbNivelProg.SelectedIndex = -1;
 
-                        //mostrar na comboBox os Gestores
-                        var allGestorList = db.Gestores.ToList();
-                        cbGestorProg.DataSource = allGestorList;
-                        cbGestorProg.DisplayMember = "Nome";
-                        cbGestorProg.ValueMember = "Id";
-                        cbGestorProg.SelectedIndex = -1;
-                    }
+                    //mostrar na comboBox os Gestores
+                    cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+                    cbGestorProg.DisplayMember = "Nome";
+                    cbGestorProg.ValueMember = "Id";
+                    cbGestorProg.SelectedIndex = -1;
+
+                    //mostra a lista de programadores
+                    lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
+                    lstListaProgramadores.DisplayMember = "Nome";
+                    lstListaProgramadores.ValueMember = "Id";
+                    lstListaProgramadores.SelectedIndex = -1;
 
                     //organiza o form
                     groupBox3.Location = new Point(16, 15);
@@ -77,73 +85,32 @@ namespace iTasks
             }
         }
 
-        private void frmGereUtilizadores_Load(object sender, EventArgs e)
-        {
-
-        }
-
         //gravar gestor
         private void btGravarGestor_Click(object sender, EventArgs e)
         {
+            //atribui valores
             string nomeGestor = txtNomeGestor.Text.Trim();
             string usernameGestor= txtUsernameGestor.Text.Trim();
             string passGestor = txtPasswordGestor.Text.Trim();
             string departamentoGestor = cbDepartamento.SelectedValue.ToString().Trim();
             bool gereUtilizadores = chkGereUtilizadores.Checked;
 
-            using (var db = new ITaskContext())
-            {
-                //verificar se o gestor já existe
-                var gestorExistente = db.Gestores.FirstOrDefault(g => g.Username == usernameGestor);
-                if (gestorExistente != null)
-                {
-                    MessageBox.Show("Já existe um gestor com este username.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                //criar novo gestor
-                Gestor novoGestor = new Gestor
-                {
-                    Nome = nomeGestor,
-                    Username = usernameGestor,
-                    Password = passGestor,
-                    Departamento = (Departamento)Enum.Parse(typeof(Departamento), departamentoGestor),
-                    GereUtilizadores = gereUtilizadores
-                };
-                //adicionar e gravar no contexto
-                db.Gestores.Add(novoGestor);
-                db.SaveChanges();
-                MessageBox.Show("Gestor gravado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //cria o gestor
+            frmGereUtilizadoresController.criarGestor(usernameGestor, nomeGestor, passGestor, departamentoGestor, gereUtilizadores);
         }
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
         {
+            if () { 
+            //atribui valores
             string nomeProg = txtNomeProg.Text.Trim();
             string usernameProg = txtUsernameProg.Text.Trim();
             string passProg = txtPasswordProg.Text.Trim();
             string nivelProg = cbNivelProg.SelectedValue.ToString().Trim();
             string gestorProg = cbGestorProg.ValueMember;
-
-            using(var db = new ITaskContext())
-            {
-                //verificar se o programadros já existe
-                var progExistente = db.Gestores.FirstOrDefault(p => p.Username == usernameProg);
-                if (progExistente != null)
-                {
-                    MessageBox.Show("Já existe um programador com este username.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                Programador novoProgramador = new Programador
-                {
-                    Nome = nomeProg,
-                    Username = usernameProg,
-                    Password = passProg,
-                    NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg),
-                    //dúvida!!! criar o gestor do programador? como fazer. Passo um int? ou um Gestor. so preciso do id.
-                    Gestor = null
-                };
-                //adicionar e gravar no contexto
-                db.Programadores.Add(novoProgramador);
-                db.SaveChanges();
-                MessageBox.Show("Programador gravado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+            //cria o programador
+            frmGereUtilizadoresController.criarProg(nomeProg, usernameProg, passProg, nivelProg, gestorProg);
             }
         }
     }
