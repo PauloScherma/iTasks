@@ -17,6 +17,7 @@ namespace iTasks
     {
         Utilizador userLogin = null;
         bool firstTimeGestor = true;
+        bool firstTimeProg = true;
 
         public frmGereUtilizadores(string username)
         {
@@ -144,9 +145,9 @@ namespace iTasks
         //mostra o programador selecionado
         private void lstListaProgramadores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (firstTime) 
+            if (firstTimeProg) 
             {
-                firstTime = false;
+                firstTimeProg = false;
                 return;
             }
 
