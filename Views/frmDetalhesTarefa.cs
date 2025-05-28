@@ -14,6 +14,9 @@ namespace iTasks
 {
     public partial class frmDetalhesTarefa : Form
     {
+        // Evento para notificar a criação de uma nova tarefa
+        public event Action<string> TarefaCriada;
+
         public frmDetalhesTarefa()
         {
             InitializeComponent();
@@ -32,8 +35,8 @@ namespace iTasks
 
             // Chama o método gravarDados do controlador para salvar os dados
             frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints);
-
             this.Close();
+            
         }
     }
 }

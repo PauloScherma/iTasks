@@ -49,7 +49,6 @@
             this.btSetTodo = new System.Windows.Forms.Button();
             this.novaTarefaButton = new System.Windows.Forms.Button();
             this.labelNomeUtilizador = new System.Windows.Forms.Label();
-
             this.btPrevisao = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -65,6 +64,7 @@
             this.lstTodo.Name = "lstTodo";
             this.lstTodo.Size = new System.Drawing.Size(296, 419);
             this.lstTodo.TabIndex = 0;
+            this.lstTodo.DoubleClick += new System.EventHandler(this.lstTodo_DoubleClick);
             // 
             // groupBox1
             // 
@@ -203,6 +203,7 @@
             this.btSetDoing.TabIndex = 5;
             this.btSetDoing.Text = "Executar Tarefa >>";
             this.btSetDoing.UseVisualStyleBackColor = true;
+            this.btSetDoing.Click += new System.EventHandler(this.btSetDoing_Click);
             // 
             // btSetDone
             // 
@@ -212,6 +213,7 @@
             this.btSetDone.TabIndex = 6;
             this.btSetDone.Text = "Terminar Tarefa >>";
             this.btSetDone.UseVisualStyleBackColor = true;
+            this.btSetDone.Click += new System.EventHandler(this.btSetDone_Click);
             // 
             // btSetTodo
             // 
@@ -221,6 +223,7 @@
             this.btSetTodo.TabIndex = 7;
             this.btSetTodo.Text = "<< Reiniciar Tarefa";
             this.btSetTodo.UseVisualStyleBackColor = true;
+            this.btSetTodo.Click += new System.EventHandler(this.btSetTodo_Click);
             // 
             // novaTarefaButton
             // 
@@ -234,15 +237,13 @@
             // 
             // labelNomeUtilizador
             // 
-
             this.labelNomeUtilizador.AutoSize = true;
             this.labelNomeUtilizador.Location = new System.Drawing.Point(1037, 42);
             this.labelNomeUtilizador.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelNomeUtilizador.Name = "labelNomeUtilizador";
-            this.labelNomeUtilizador.Size = new System.Drawing.Size(187, 16);
+            this.labelNomeUtilizador.Size = new System.Drawing.Size(149, 13);
             this.labelNomeUtilizador.TabIndex = 9;
             this.labelNomeUtilizador.Text = "Bem vindo: <Nome Utilizador>";
-
             // 
             // btPrevisao
             // 
@@ -260,9 +261,7 @@
             this.ClientSize = new System.Drawing.Size(943, 537);
             this.Controls.Add(this.btPrevisao);
             this.Controls.Add(this.novaTarefaButton);
-
             this.Controls.Add(this.labelNomeUtilizador);
-
             this.Controls.Add(this.btSetTodo);
             this.Controls.Add(this.btSetDone);
             this.Controls.Add(this.btSetDoing);

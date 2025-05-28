@@ -19,6 +19,9 @@ namespace iTasks
         public frmKanban(string username, string password)
         {
             InitializeComponent();
+            CarregarTarefa();
+            CarregarTarefasDoing();
+            CarregarTarefasDone();
 
             //atribuimos o tipo do utilizador logado à variavel
             string typeOfUser = frmKanbanController.typeOfUser(username, password);
@@ -48,9 +51,9 @@ namespace iTasks
                 //define o userLogin
                 userLogin = frmKanbanController.programadorLogedIn(username);
                 //atribui o nome do utilizador à label
-                labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
+                    labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
                 //escoder coisas
-                btNova.Hide();
+                novaTarefaButton.Hide();
                 utilizadoresToolStripMenuItem.Visible = false;
             }
         }
@@ -94,8 +97,147 @@ namespace iTasks
 
         private void novaTarefaButton_Click(object sender, EventArgs e)
         {
-            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
-            frmDetalhesTarefa.Show();
+            var frm = new frmDetalhesTarefa();
+            frm.TarefaCriada += id =>
+            {
+                CarregarTarefa(); // Atualiza a lista após criar uma tarefa
+            };
+            frm.ShowDialog();
         }
+
+        private void CarregarTarefa()
+        {
+            lstTodo.Items.Clear();
+            using (var context = new ITaskContext())
+            {
+                var tarefas = context.Tarefas
+                    .Where(t => t.EstadoAtual == EstadoAtual.ToDo)
+                    .ToList();
+                foreach (var tarefa in tarefas)
+                {
+                    lstTodo.Items.Add($"{tarefa.Descricao}");
+                }
+            }
+        }
+
+        private void CarregarTarefasDoing()
+        {
+            lstDoing.Items.Clear();
+            using (var context = new ITaskContext())
+            {
+                var tarefasDoing = context.Tarefas
+                    .Where(t => t.EstadoAtual == EstadoAtual.Doing)
+                    .ToList();
+                foreach (var tarefa in tarefasDoing)
+                {
+                    lstDoing.Items.Add($"{tarefa.Descricao}");
+                }
+            }
+        }
+
+        private void CarregarTarefasDone()
+        {
+            lstDone.Items.Clear();
+            using (var context = new ITaskContext())
+            {
+                var tarefasDone = context.Tarefas
+                    .Where(t => t.EstadoAtual == EstadoAtual.Done)
+                    .ToList();
+                foreach (var tarefa in tarefasDone)
+                {
+                    lstDone.Items.Add($"{tarefa.Descricao}");
+                }
+            }
+        }
+
+        private void btSetDoing_Click(object sender, EventArgs e)
+        {
+            if (lstTodo.SelectedItem != null)
+            {
+                string descricaoSelecionada = lstTodo.SelectedItem.ToString();
+
+                using (var context = new ITaskContext())
+                {
+                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    if (tarefa != null)
+                    {
+                        tarefa.EstadoAtual = EstadoAtual.Doing;
+                        context.SaveChanges();
+                    }
+                }
+
+                lstDoing.Items.Add(lstTodo.SelectedItem);
+                lstTodo.Items.Remove(lstTodo.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Selecione uma tarefa para mover!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btSetTodo_Click(object sender, EventArgs e)
+        {
+            if (lstDoing.SelectedItem != null)
+            {
+                string descricaoSelecionada = lstDoing.SelectedItem.ToString();
+                using (var context = new ITaskContext())
+                {
+                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    if (tarefa != null)
+                    {
+                        tarefa.EstadoAtual = EstadoAtual.ToDo;
+                        context.SaveChanges();
+                    }
+                }
+                lstTodo.Items.Add(lstDoing.SelectedItem);
+                lstDoing.Items.Remove(lstDoing.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Selecione uma tarefa para reiniciar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btSetDone_Click(object sender, EventArgs e)
+        {
+            if (lstDoing.SelectedItem != null)
+            {
+                string descricaoSelecionada = lstDoing.SelectedItem.ToString();
+                using (var context = new ITaskContext())
+                    {
+                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    if (tarefa != null)
+                    {
+                        tarefa.EstadoAtual = EstadoAtual.Done;
+                        context.SaveChanges();
+                    }
+                }
+                lstDone.Items.Add(lstDoing.SelectedItem);
+                lstDoing.Items.Remove(lstDoing.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Selecione uma tarefa para finalizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void lstTodo_DoubleClick(object sender, EventArgs e)
+        {
+            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
+            if (lstTodo.SelectedItem != null)
+            {
+                string descricao = lstTodo.SelectedItem.ToString();
+                frmDetalhesTarefa.TarefaCriada += desc =>
+                {
+                    lstTodo.Items[lstTodo.SelectedIndex] = desc;
+                };
+                frmDetalhesTarefa.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Selecione uma tarefa para editar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }
