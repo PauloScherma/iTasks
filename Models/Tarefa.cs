@@ -29,7 +29,7 @@ namespace iTasks.Models
         public DateTime DataPrevistaFim { get; set; }
         //chave estrangeira - TipoTarefa
         public TipoTarefa IdTipoTarefa { get; set; }
-        public string StoryPoints { get; set; }
+        public int StoryPoints { get; set; }
         public DateTime DataRealInicio { get; set; }
         public DateTime DataCriacao { get; set; }
         public EstadoAtual EstadoAtual { get; set; }
