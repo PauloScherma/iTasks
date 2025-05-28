@@ -14,8 +14,6 @@ namespace iTasks
 {
     public partial class frmDetalhesTarefa : Form
     {
-        // Evento para notificar a criação de uma nova tarefa
-        public event Action<string> TarefaCriada;
 
         public frmDetalhesTarefa()
         {
