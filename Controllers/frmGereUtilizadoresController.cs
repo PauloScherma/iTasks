@@ -10,7 +10,7 @@ namespace iTasks.Controllers
 {
     class frmGereUtilizadoresController
     {
-        public static void criarProg(string nomeProg, string usernameProg, string passProg, string nivelProg, string gestorProg)
+        public static void criarProg(string nomeProg, string usernameProg, string passProg, string nivelProg, Gestor gestorProg)
         {
             using (var db = new ITaskContext())
             {
@@ -23,8 +23,7 @@ namespace iTasks.Controllers
                     progExistente.Username = usernameProg;
                     progExistente.Password = passProg;
                     progExistente.NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg);
-                    //não está a mudar???
-                    progExistente.Gestor = db.Gestores.FirstOrDefault(g => g.Username == gestorProg);
+                    progExistente.Gestor = gestorProg;
                     //altera os dados
                     db.SaveChanges();
                     MessageBox.Show("Username já existe. Os dados dele foram alterados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -38,8 +37,7 @@ namespace iTasks.Controllers
                         Username = usernameProg,
                         Password = passProg,
                         NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg),
-                        //não está a mudar???
-                        Gestor = db.Gestores.FirstOrDefault(g => g.Username == gestorProg)
+                        Gestor = gestorProg
                     };
                     //adicionar e gravar no contexto
                     db.Programadores.Add(novoProgramador);
@@ -82,28 +80,6 @@ namespace iTasks.Controllers
                     db.SaveChanges();
                     MessageBox.Show("Gestor gravado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-        }
-        //pega o nivel de experiencia
-        public static List<NivelExperiencia> mostrarNivelExperiencia()
-        {
-            using (var db = new ITaskContext())
-            {
-                //mostrar na comboBox o enum NivelExperiencia
-                var nivelExperienciaList = Enum.GetValues(typeof(NivelExperiencia)).Cast<NivelExperiencia>().ToList();
-                //retornar a lista
-                return nivelExperienciaList;
-            }
-        }
-        //pega os departamentos
-        public static List<Departamento> mostrarDepartamentos()
-        {
-            using (var db = new ITaskContext())
-            {
-                //mostrar na comboBox o enum Departamento
-                var departamentoList = Enum.GetValues(typeof(Departamento)).Cast<Departamento>().ToList();
-                //retornar a lista
-                return departamentoList;
             }
         }
         //pega todos os gestores
@@ -165,6 +141,10 @@ namespace iTasks.Controllers
                     MessageBox.Show("Programador não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+        public override string ToString()
+        {
+            return "";
         }
     }
 }

@@ -16,6 +16,7 @@ namespace iTasks
     public partial class frmGereUtilizadores : Form
     {
         Utilizador userLogin = null;
+        bool firstTimeGestor = true;
 
         public frmGereUtilizadores(string username)
         {
@@ -33,48 +34,38 @@ namespace iTasks
                 if (((Gestor)userLogin).GereUtilizadores)
                 {
                     //mostrar na comboBox o enum Departamento
-                    cbDepartamento.DataSource = frmGereUtilizadoresController.mostrarDepartamentos();
+                    cbDepartamento.DataSource =  Enum.GetValues(typeof(Departamento)).Cast<Departamento>().ToList();
                     cbDepartamento.SelectedIndex = -1;
 
                     //mostrar na comboBox o enum NivelExperiencia
-                    cbNivelProg.DataSource = frmGereUtilizadoresController.mostrarNivelExperiencia();
+                    cbNivelProg.DataSource = Enum.GetValues(typeof(NivelExperiencia)).Cast<NivelExperiencia>().ToList();
                     cbNivelProg.SelectedIndex = -1;
 
                     //mostrar na comboBox os Gestores
                     cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
-                    cbGestorProg.DisplayMember = "Nome";
-                    cbGestorProg.ValueMember = "Id";
                     cbGestorProg.SelectedIndex = -1;
 
                     //mostra a lista de gestores
                     lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
-                    lstListaGestores.DisplayMember = "Nome";
-                    lstListaGestores.ValueMember = "Id";
                     lstListaGestores.SelectedIndex = -1;
 
                     //mostra a lista de programadores
                     lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
-                    lstListaProgramadores.DisplayMember = "Nome";
-                    lstListaProgramadores.ValueMember = "Id";
                     lstListaProgramadores.SelectedIndex = -1;
                 }
                 //gestor dos programadores
                 else
                 {
                     //mostrar na comboBox o enum NivelExperiencia
-                    cbNivelProg.DataSource = frmGereUtilizadoresController.mostrarNivelExperiencia();
+                    cbNivelProg.DataSource = Enum.GetValues(typeof(NivelExperiencia)).Cast<NivelExperiencia>().ToList();
                     cbNivelProg.SelectedIndex = -1;
 
                     //mostrar na comboBox os Gestores
                     cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
-                    cbGestorProg.DisplayMember = "Nome";
-                    cbGestorProg.ValueMember = "Id";
                     cbGestorProg.SelectedIndex = -1;
 
                     //mostra a lista de programadores
                     lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
-                    lstListaProgramadores.DisplayMember = "Nome";
-                    lstListaProgramadores.ValueMember = "Id";
                     lstListaProgramadores.SelectedIndex = -1;
 
                     //organiza o form
@@ -84,7 +75,6 @@ namespace iTasks
                 }
             }
         }
-
         //gravar gestor
         private void btGravarGestor_Click(object sender, EventArgs e)
         {
@@ -97,29 +87,38 @@ namespace iTasks
 
             //cria o gestor
             frmGereUtilizadoresController.criarGestor(usernameGestor, nomeGestor, passGestor, departamentoGestor, gereUtilizadores);
+
+            //atualiza a listBox
+            lstListaGestores.DataSource = null;
+            lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
         }
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
         {
-            if (true) { 
             //atribui valores
             string nomeProg = txtNomeProg.Text.Trim();
             string usernameProg = txtUsernameProg.Text.Trim();
             string passProg = txtPasswordProg.Text.Trim();
             string nivelProg = cbNivelProg.SelectedValue.ToString().Trim();
-            string gestorProg = cbGestorProg.ValueMember;
-            
+            Gestor gestorProg = (Gestor)cbGestorProg.SelectedItem;
+
             //cria o programador
             frmGereUtilizadoresController.criarProg(nomeProg, usernameProg, passProg, nivelProg, gestorProg);
-            }
-        }
 
+            //atualiza a listBox
+            lstListaProgramadores.DataSource = null;
+            lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
+        }
+        //mostra o utilizagestor selecionado
         private void lstListaGestores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //porque fica com 0? não devia ser -1 -> problema no SelectedIndexChanged?
-            int indexSelecionado = lstListaGestores.SelectedIndex;
+            if (firstTimeGestor)
+            {
+                firstTimeGestor = false;
+                return;
+            }
 
-            if (indexSelecionado != -1) 
+            if (lstListaGestores.SelectedIndex != -1) 
             {
                 //pega o gestor selecionado na lista
                 Gestor gestorSelecionado = (Gestor)lstListaGestores.SelectedItem;
@@ -142,13 +141,16 @@ namespace iTasks
                 }
             }
         }
-
+        //mostra o programador selecionado
         private void lstListaProgramadores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //porque fica com 0? não devia ser -1 -> problema no SelectedIndexChanged?
-            int indexSelecionado = lstListaProgramadores.SelectedIndex;
+            if (firstTime) 
+            {
+                firstTime = false;
+                return;
+            }
 
-            if (indexSelecionado != -1)
+            if (lstListaProgramadores.SelectedIndex != -1)
             {
                 //pega o gestor selecionado na lista
                 Programador progSelecionado = (Programador)lstListaProgramadores.SelectedItem;
@@ -159,10 +161,9 @@ namespace iTasks
                 txtUsernameProg.Text = progSelecionado.Username;
                 txtPasswordProg.Text = progSelecionado.Password;
                 cbNivelProg.SelectedItem = progSelecionado.NivelExperiencia;
-                //cbGestorProg.SelectedValue = progSelecionado.GestorId;
+                //cbGestorProg.SelectedValue = progSelecionado.Gestor;
             }
         }
-
         //excluir gestor
         private void button1_Click(object sender, EventArgs e)
         {
