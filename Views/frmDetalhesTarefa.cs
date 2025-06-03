@@ -15,6 +15,7 @@ namespace iTasks
     public partial class frmDetalhesTarefa : Form
     {
 
+        //public event Action<string> TarefaCriada;
         public frmDetalhesTarefa()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace iTasks
 
             // Chama o método gravarDados do controlador para salvar os dados
             frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints);
+            frmKanbanController.mostrarTodo();
             this.Close();
             
         }
