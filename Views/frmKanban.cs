@@ -20,9 +20,6 @@ namespace iTasks
         public frmKanban(string username)
         {
             InitializeComponent();
-            CarregarTarefa();
-            CarregarTarefasDoing();
-            CarregarTarefasDone();
 
             //atribuimos o tipo do utilizador logado à variavel
             string typeOfUser = frmKanbanController.typeOfUser(username);
@@ -51,7 +48,7 @@ namespace iTasks
                 //define o userLogin
                 userLogin = frmKanbanController.programadorLogedIn(username);
                 //atribui o nome do utilizador à label
-                    labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
+                labelNomeUtilizador.Text = "Bem-vindo: " + userLogin.Nome;
                 //escoder coisas
                 novaTarefaButton.Hide();
                 utilizadoresToolStripMenuItem.Visible = false;
@@ -88,6 +85,12 @@ namespace iTasks
             frmGereTiposTarefas.Show();
         }
 
+        private void novaTarefaButton_Click(object sender, EventArgs e)
+        {
+            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
+            frmDetalhesTarefa.Show();
+            lstTodo.DataSource = frmKanbanController.mostrarTodo();
+        }
         #endregion
 
         //função para verificar a saida
@@ -99,60 +102,6 @@ namespace iTasks
                 e.Cancel = true;
         }
 
-        private void novaTarefaButton_Click(object sender, EventArgs e)
-        {
-            var frm = new frmDetalhesTarefa();
-            frm.TarefaCriada += desc =>
-            {
-                CarregarTarefa(); // Atualiza a lista após criar uma tarefa
-            };
-            frm.ShowDialog();
-        }
-
-        private void CarregarTarefa()
-        {
-            lstTodo.Items.Clear();
-            using (var context = new ITaskContext())
-            {
-                var tarefas = context.Tarefas
-                    .Where(t => t.EstadoAtual == EstadoAtual.ToDo)
-                    .ToList();
-                foreach (var tarefa in tarefas)
-                {
-                    lstTodo.Items.Add($"{tarefa.Descricao}");
-                }
-            }
-        }
-
-        private void CarregarTarefasDoing()
-        {
-            lstDoing.Items.Clear();
-            using (var context = new ITaskContext())
-            {
-                var tarefasDoing = context.Tarefas
-                    .Where(t => t.EstadoAtual == EstadoAtual.Doing)
-                    .ToList();
-                foreach (var tarefa in tarefasDoing)
-                {
-                    lstDoing.Items.Add($"{tarefa.Descricao}");
-                }
-            }
-        }
-
-        private void CarregarTarefasDone()
-        {
-            lstDone.Items.Clear();
-            using (var context = new ITaskContext())
-            {
-                var tarefasDone = context.Tarefas
-                    .Where(t => t.EstadoAtual == EstadoAtual.Done)
-                    .ToList();
-                foreach (var tarefa in tarefasDone)
-                {
-                    lstDone.Items.Add($"{tarefa.Descricao}");
-                }
-            }
-        }
 
         private void btSetDoing_Click(object sender, EventArgs e)
         {
@@ -208,7 +157,7 @@ namespace iTasks
             {
                 string descricaoSelecionada = lstDoing.SelectedItem.ToString();
                 using (var context = new ITaskContext())
-                    {
+                {
                     var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
                     if (tarefa != null)
                     {
@@ -227,21 +176,22 @@ namespace iTasks
 
         private void lstTodo_DoubleClick(object sender, EventArgs e)
         {
-            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
-            if (lstTodo.SelectedItem != null)
-            {
-                string descricao = lstTodo.SelectedItem.ToString();
-                frmDetalhesTarefa.TarefaCriada += desc =>
-                {
-                    lstTodo.Items[lstTodo.SelectedIndex] = desc;
-                };
-                frmDetalhesTarefa.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Selecione uma tarefa para editar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            //frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
+            //if (lstTodo.SelectedItem != null)
+            //{
+            //    string descricao = lstTodo.SelectedItem.ToString();
+            //    frmDetalhesTarefa.TarefaCriada += desc =>
+            //    {
+            //        lstTodo.Items[lstTodo.SelectedIndex] = desc;
+            //    };
+            //    frmDetalhesTarefa.ShowDialog();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Selecione uma tarefa para editar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
 
     }
 }
+

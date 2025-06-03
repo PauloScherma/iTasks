@@ -20,7 +20,7 @@ namespace iTasks.Controllers
                 var gestorLogedIn = db.Gestores
                     .Where(u => u.Username == username)
                     .FirstOrDefault();
-                
+
                 return gestorLogedIn;
             }
         }
@@ -53,5 +53,38 @@ namespace iTasks.Controllers
 
             }
         }
+        public static List<Tarefa> mostrarTodo()
+        {
+            using (var db = new ITaskContext())
+            {
+                //mostrar na lstBox as Tarefas
+                var allTarefaList = db.Tarefas.ToList();
+                //retornar a lista
+                return allTarefaList;
+            }
+        }
+
+        public static List<Tarefa> mostrarDoing()
+        {
+            using (var db = new ITaskContext())
+            {
+                //mostrar na lstBox as Tarefas
+                var allTarefaList = db.Tarefas.ToList();
+                //retornar a lista
+                return allTarefaList;
+            }
+        }
+
+        public static List<Tarefa> mostrarDone()
+        {
+            using (var db = new ITaskContext())
+            {
+                //mostrar na lstBox as Tarefas
+                var allTarefaList = db.Tarefas.ToList();
+                //retornar a lista
+                return allTarefaList;
+            }
+        }
     }
 }
+
