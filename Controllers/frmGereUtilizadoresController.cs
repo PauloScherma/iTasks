@@ -142,9 +142,5 @@ namespace iTasks.Controllers
                 }
             }
         }
-        public override string ToString()
-        {
-            return "";
-        }
     }
 }

@@ -14,6 +14,7 @@ namespace iTasks
 {
     public partial class frmDetalhesTarefa : Form
     {
+        public event Action<string> TarefaCriada;
 
         public frmDetalhesTarefa()
         {

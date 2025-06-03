@@ -102,7 +102,7 @@ namespace iTasks
         private void novaTarefaButton_Click(object sender, EventArgs e)
         {
             var frm = new frmDetalhesTarefa();
-            frm.TarefaCriada += id =>
+            frm.TarefaCriada += desc =>
             {
                 CarregarTarefa(); // Atualiza a lista após criar uma tarefa
             };
