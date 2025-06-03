@@ -102,6 +102,7 @@ namespace iTasks
                 e.Cancel = true;
         }
 
+
         private void btSetDoing_Click(object sender, EventArgs e)
         {
             if (lstTodo.SelectedItem != null)

@@ -12,6 +12,7 @@ namespace iTasks.Controllers
     {
         //public static event Action<string> TarefaCriada;
 
+
         public static void gravarDados(Utilizador IdProgramador, int OrdemExecucao, string descricao, DateTime DataPrevistaInicio, DateTime DataPrevistaFim, TipoTarefa IdTipoTarefa, int StoryPoints)
         {
             using (var context = new ITaskContext())
@@ -30,6 +31,7 @@ namespace iTasks.Controllers
                 context.SaveChanges();
 
                 //TarefaCriada.Invoke(descricao); // Notifica que a tarefa foi criada
+
             }
         }
     }
