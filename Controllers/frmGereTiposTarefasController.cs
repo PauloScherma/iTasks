@@ -22,5 +22,15 @@ namespace iTasks.Controllers
                 context.SaveChanges();
             }
         }
+        public static List<TipoTarefa> mostrarTiposTarefas()
+        {
+            using (var db = new ITaskContext())
+            {
+                //mostrar na comboBox os Tipos de Tarefas
+                var allTipoTarefaList = db.TiposTarefa.ToList();
+                //retornar a lista
+                return allTipoTarefaList;
+            }
+        }
     }
 }

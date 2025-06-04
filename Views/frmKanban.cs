@@ -20,6 +20,9 @@ namespace iTasks
         public frmKanban(string username)
         {
             InitializeComponent();
+            lstTodo.DataSource = frmKanbanController.mostrarTodo();
+            lstDoing.DataSource = frmKanbanController.mostrarDoing();
+            lstDone.DataSource = frmKanbanController.mostrarDone();
 
             //atribuimos o tipo do utilizador logado à variavel
             string typeOfUser = frmKanbanController.typeOfUser(username);
@@ -88,7 +91,7 @@ namespace iTasks
         private void novaTarefaButton_Click(object sender, EventArgs e)
         {
             frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
-            frmDetalhesTarefa.Show();
+            frmDetalhesTarefa.ShowDialog(); // Aguarda o fechamento do formulário
             lstTodo.DataSource = frmKanbanController.mostrarTodo();
         }
         #endregion
@@ -108,23 +111,22 @@ namespace iTasks
             if (lstTodo.SelectedItem != null)
             {
                 string descricaoSelecionada = lstTodo.SelectedItem.ToString();
-
                 using (var context = new ITaskContext())
                 {
                     var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
                     if (tarefa != null)
                     {
                         tarefa.EstadoAtual = EstadoAtual.Doing;
+                        tarefa.DataRealInicio = DateTime.Now;
                         context.SaveChanges();
                     }
                 }
-
-                lstDoing.Items.Add(lstTodo.SelectedItem);
-                lstTodo.Items.Remove(lstTodo.SelectedItem);
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
+                lstTodo.DataSource = frmKanbanController.mostrarTodo();
             }
             else
             {
-                MessageBox.Show("Selecione uma tarefa para mover!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Selecione uma tarefa para iniciar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -142,8 +144,8 @@ namespace iTasks
                         context.SaveChanges();
                     }
                 }
-                lstTodo.Items.Add(lstDoing.SelectedItem);
-                lstDoing.Items.Remove(lstDoing.SelectedItem);
+                lstTodo.DataSource = frmKanbanController.mostrarTodo();
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
             }
             else
             {
@@ -162,36 +164,54 @@ namespace iTasks
                     if (tarefa != null)
                     {
                         tarefa.EstadoAtual = EstadoAtual.Done;
+                        tarefa.DataRealFim = DateTime.Now;
                         context.SaveChanges();
                     }
                 }
-                lstDone.Items.Add(lstDoing.SelectedItem);
-                lstDoing.Items.Remove(lstDoing.SelectedItem);
+                lstDone.DataSource = frmKanbanController.mostrarDone();
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
             }
             else
             {
-                MessageBox.Show("Selecione uma tarefa para finalizar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Selecione uma tarefa para concluir!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void lstTodo_DoubleClick(object sender, EventArgs e)
         {
-            //frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
-            //if (lstTodo.SelectedItem != null)
-            //{
-            //    string descricao = lstTodo.SelectedItem.ToString();
-            //    frmDetalhesTarefa.TarefaCriada += desc =>
-            //    {
-            //        lstTodo.Items[lstTodo.SelectedIndex] = desc;
-            //    };
-            //    frmDetalhesTarefa.ShowDialog();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Selecione uma tarefa para editar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
+            if (lstTodo.SelectedItem is Tarefa tarefaSelecionada)
+            {
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                frm.ShowDialog();
+                lstTodo.DataSource = frmKanbanController.mostrarTodo();
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
+                lstDone.DataSource = frmKanbanController.mostrarDone();
+            }
         }
 
+        private void lstDoing_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstDoing.SelectedItem is Tarefa tarefaSelecionada)
+            {
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                frm.ShowDialog();
+                lstTodo.DataSource = frmKanbanController.mostrarTodo();
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
+                lstDone.DataSource = frmKanbanController.mostrarDone();
+            }
+        }
+
+        private void lstDone_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstDone.SelectedItem is Tarefa tarefaSelecionada)
+            {
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                frm.ShowDialog();
+                lstTodo.DataSource = frmKanbanController.mostrarTodo();
+                lstDoing.DataSource = frmKanbanController.mostrarDoing();
+                lstDone.DataSource = frmKanbanController.mostrarDone();
+            }
+        }
     }
 }
 
