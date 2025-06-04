@@ -33,5 +33,21 @@ namespace iTasks.Models
         public DateTime DataRealInicio { get; set; }
         public DateTime DataCriacao { get; set; }
         public EstadoAtual EstadoAtual { get; set; }
+
+        public DateTime DataRealFim { get; set; }
+
+        public override string ToString()
+        {
+            // Retorna o nome do utilizador para exibição na lista
+            if (this is Tarefa tarefa)
+            {
+                return "" + tarefa.Descricao;
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
+
 }

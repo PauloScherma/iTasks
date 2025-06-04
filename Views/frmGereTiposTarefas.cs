@@ -17,7 +17,7 @@ namespace iTasks
         public frmGereTiposTarefas()
         {
             InitializeComponent();
-            CarregarTiposTarefa();
+            lstLista.DataSource = frmGereTiposTarefasController.mostrarTiposTarefas();
         }
 
         private void btGravar_Click(object sender, EventArgs e)
@@ -25,20 +25,7 @@ namespace iTasks
             string descricao = txtDesc.Text;
 
             frmGereTiposTarefasController.gravarDados(descricao);
-            CarregarTiposTarefa(); // Atualiza a lista após gravar
-        }
-
-        private void CarregarTiposTarefa()
-        {
-            lstLista.Items.Clear();
-            using (var context = new ITaskContext())
-            {
-                var tipos = context.TiposTarefa.ToList();
-                foreach (var tipo in tipos)
-                {
-                    lstLista.Items.Add($"{tipo.Id} - {tipo.Nome}");
-                }
-            }
+            lstLista.DataSource = frmGereTiposTarefasController.mostrarTiposTarefas();
         }
     }
 }
