@@ -92,6 +92,7 @@ namespace iTasks
             //atualiza a listBox
             lstListaGestores.DataSource = null;
             lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            lstListaGestores.SelectedIndex = -1;
         }
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
@@ -109,6 +110,7 @@ namespace iTasks
             //atualiza a listBox
             lstListaProgramadores.DataSource = null;
             lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
+            lstListaProgramadores.SelectedIndex = -1;
         }
         //mostra o utilizagestor selecionado
         private void lstListaGestores_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,7 +164,7 @@ namespace iTasks
                 txtUsernameProg.Text = progSelecionado.Username;
                 txtPasswordProg.Text = progSelecionado.Password;
                 cbNivelProg.SelectedItem = progSelecionado.NivelExperiencia;
-                //cbGestorProg.SelectedValue = progSelecionado.Gestor;
+                cbGestorProg.Text = progSelecionado.Gestor.Nome;
             }
         }
         //excluir gestor

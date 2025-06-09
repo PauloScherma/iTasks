@@ -1,6 +1,7 @@
 ﻿using iTasks.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,7 +100,7 @@ namespace iTasks.Controllers
             using (var db = new ITaskContext())
             {
                 //mostrar na comboBox os Programadores
-                var allProgramadorList = db.Programadores.ToList();
+                var allProgramadorList = db.Programadores.Include("Gestor").ToList();
                 //retornar a lista
                 return allProgramadorList;
             }
