@@ -21,8 +21,7 @@ namespace iTasks
                 ////definir gestores
                 //var paulo = new Gestor { Nome = "paulo", Username = "paulo", Password = "paulo", Departamento = Departamento.Administração, GereUtilizadores = false };
                 //db.Utilizadores.Add(paulo);
-
-                ////definir gestor do programdador
+                //definir gestor do programdador
                 //var gestorDoProgramador = db.Gestores.FirstOrDefault(g => g.Username == "admin");
                 ////difinir programador
                 //var miguel = new Programador { Nome = "miguel", Username = "miguel", Password = "miguel", NivelExperiencia = NivelExperiencia.Junior, Gestor = gestorDoProgramador };
@@ -30,7 +29,7 @@ namespace iTasks
                 ////difinir tipo tarefa
                 //var tipoTarefa = new TipoTarefa { Nome = "Desenvolvimento" };
                 //db.TiposTarefa.Add(tipoTarefa);
-                db.SaveChanges();
+                //db.SaveChanges();
             }
 
             Application.EnableVisualStyles();

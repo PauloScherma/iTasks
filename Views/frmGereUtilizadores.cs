@@ -79,6 +79,13 @@ namespace iTasks
         //gravar gestor
         private void btGravarGestor_Click(object sender, EventArgs e)
         {
+            //verificações
+            if (txtNomeGestor.Text.Trim() == string.Empty || txtUsernameGestor.Text.Trim() == string.Empty || txtPasswordGestor.Text.Trim() == string.Empty || cbDepartamento.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //atribui valores
             string nomeGestor = txtNomeGestor.Text.Trim();
             string usernameGestor= txtUsernameGestor.Text.Trim();
@@ -97,6 +104,13 @@ namespace iTasks
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
         {
+            //verificações
+            if (txtNomeProg.Text.Trim() == string.Empty || txtUsernameProg.Text.Trim() == string.Empty || txtPasswordProg.Text.Trim() == string.Empty || cbNivelProg.SelectedValue == null || cbGestorProg.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //atribui valores
             string nomeProg = txtNomeProg.Text.Trim();
             string usernameProg = txtUsernameProg.Text.Trim();

@@ -105,6 +105,7 @@ namespace iTasks.Controllers
                 return allProgramadorList;
             }
         }
+        //excluir gestor
         public static void excluirGestor(int gestorId)
         {
             using (var db = new ITaskContext())
@@ -124,6 +125,7 @@ namespace iTasks.Controllers
                 }
             }
         }
+        //excluir programador
         public static void excluirProgramador(int progId)
         {
             using (var db = new ITaskContext())

@@ -217,6 +217,14 @@ namespace iTasks
                 lstDone.DataSource = frmKanbanController.mostrarDone();
             }
         }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+            frmLogin frmLogin = new frmLogin();
+            frmLogin.Show();
+        }
     }
 }
 
