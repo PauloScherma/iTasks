@@ -100,6 +100,11 @@ namespace iTasks
             lstListaGestores.DataSource = null;
             lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
             lstListaGestores.SelectedIndex = -1;
+
+
+            //mostrar na comboBox os Gestores
+            cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            cbGestorProg.SelectedIndex = -1;
         }
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
@@ -188,6 +193,14 @@ namespace iTasks
             Gestor gestorSelecionado = (Gestor)lstListaGestores.SelectedItem;
             int IdGestor = gestorSelecionado.Id;
             frmGereUtilizadoresController.excluirGestor(IdGestor);
+
+            //atualiza as listBoxs
+            lstListaGestores.DataSource = null;
+            lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
+
+            //mostrar na comboBox os Gestores
+            cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            cbGestorProg.SelectedIndex = -1;
         }
         //excluir programador
         private void button2_Click(object sender, EventArgs e)
@@ -196,6 +209,10 @@ namespace iTasks
             Programador progSelecionado = (Programador)lstListaProgramadores.SelectedItem;
             int IdProg = progSelecionado.Id;
             frmGereUtilizadoresController.excluirProgramador(IdProg);
+
+            //atualiza as listBoxs
+            lstListaProgramadores.DataSource = null;
+            lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace iTasks
             //criar base de dados
             using (var db = new ITaskContext())
             {
-                ////definir admin
+                //definir admin
                 //var admin = new Gestor { Nome = "admin", Username = "admin", Password = "admin", Departamento = Departamento.Administração, GereUtilizadores = true };
                 //db.Utilizadores.Add(admin);
                 ////definir gestores
