@@ -36,6 +36,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstListaGestores = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.chkGereUtilizadores = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtPasswordGestor = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@
             this.txtUsernameGestor = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.cbGestorProg = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -59,8 +61,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtNomeProg = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -164,6 +164,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gestores";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(392, 383);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(268, 23);
+            this.button1.TabIndex = 44;
+            this.button1.Text = "Excluir Dados";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // chkGereUtilizadores
             // 
             this.chkGereUtilizadores.AutoSize = true;
@@ -195,6 +205,7 @@
             // 
             // cbDepartamento
             // 
+            this.cbDepartamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDepartamento.FormattingEnabled = true;
             this.cbDepartamento.Location = new System.Drawing.Point(392, 250);
             this.cbDepartamento.Margin = new System.Windows.Forms.Padding(4);
@@ -256,6 +267,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Programadores";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(392, 383);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(268, 23);
+            this.button2.TabIndex = 45;
+            this.button2.Text = "Excluir Dados";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -268,6 +289,7 @@
             // 
             // cbGestorProg
             // 
+            this.cbGestorProg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGestorProg.FormattingEnabled = true;
             this.cbGestorProg.Location = new System.Drawing.Point(392, 303);
             this.cbGestorProg.Margin = new System.Windows.Forms.Padding(4);
@@ -306,6 +328,7 @@
             // 
             // cbNivelProg
             // 
+            this.cbNivelProg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbNivelProg.FormattingEnabled = true;
             this.cbNivelProg.Location = new System.Drawing.Point(392, 250);
             this.cbNivelProg.Margin = new System.Windows.Forms.Padding(4);
@@ -401,26 +424,6 @@
             this.label10.Size = new System.Drawing.Size(47, 16);
             this.label10.TabIndex = 35;
             this.label10.Text = "Nome:";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(392, 383);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(268, 23);
-            this.button1.TabIndex = 44;
-            this.button1.Text = "Excluir Dados";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(392, 383);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(268, 23);
-            this.button2.TabIndex = 45;
-            this.button2.Text = "Excluir Dados";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // frmGereUtilizadores
             // 

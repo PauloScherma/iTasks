@@ -58,7 +58,6 @@ namespace iTasks
                 cbProgramador.Enabled = false;
                 cbTipoTarefa.Enabled = false;
             }
-
             if (tarefa != null)
             {
                 //parte de cima

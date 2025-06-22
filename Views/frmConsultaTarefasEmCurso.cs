@@ -15,6 +15,14 @@ namespace iTasks
         public frmConsultaTarefasEmCurso()
         {
             InitializeComponent();
+
+            // Carregar as tarefas concluídas ao carregar o formulário
+            gvTarefasEmCurso.DataSource = Controllers.frmConsultarTarefasEmCursoController.mostrarTarefasEmCurso();
+        }
+
+        private void btFechar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

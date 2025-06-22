@@ -16,7 +16,6 @@ namespace iTasks.Controllers
             //pega no utilizador que está logado
             using (var db = new ITaskContext())
             {
-                //ver melhor tipo
                 var gestorLogedIn = db.Gestores
                     .Where(u => u.Username == username)
                     .FirstOrDefault();
