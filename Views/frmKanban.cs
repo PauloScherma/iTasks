@@ -92,9 +92,13 @@ namespace iTasks
 
         private void novaTarefaButton_Click(object sender, EventArgs e)
         {
-            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa();
-            frmDetalhesTarefa.ShowDialog(); // Aguarda o fechamento do formulário
+            frmDetalhesTarefa frmDetalhesTarefa = new frmDetalhesTarefa((Gestor)userLogin);
+            frmDetalhesTarefa.ShowDialog();
+
+            // Atualiza as listas após fechar o formulário de detalhes
             lstTodo.DataSource = frmKanbanController.mostrarTodo();
+            lstDoing.DataSource = frmKanbanController.mostrarDoing();
+            lstDone.DataSource = frmKanbanController.mostrarDone();
         }
         #endregion
 
@@ -114,9 +118,48 @@ namespace iTasks
                 string descricaoSelecionada = lstTodo.SelectedItem.ToString();
                 using (var context = new ITaskContext())
                 {
-                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    var tarefa = context.Tarefas.Include("IdProgramador").FirstOrDefault(t => t.Descricao == descricaoSelecionada);
                     if (tarefa != null)
                     {
+                        string typeOfUser = frmKanbanController.typeOfUser(username);
+                        if (typeOfUser == "Programador")
+                        {
+                            var programador = frmKanbanController.programadorLogedIn(username);
+                            if (tarefa.IdProgramador == null || tarefa.IdProgramador.Id != programador.Id)
+                            {
+                                MessageBox.Show("Você só pode movimentar tarefas atribuídas a você.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            // Verifica se o programador já tem 2 tarefas em Doing
+                            int doingCount = context.Tarefas
+                                .Where(t => t.IdProgramador.Id == programador.Id && t.EstadoAtual == EstadoAtual.Doing)
+                                .Count();
+
+                            if (doingCount >= 2)
+                            {
+                                MessageBox.Show("Você já possui 2 tarefas em andamento (Doing). Conclua ou mova alguma para poder iniciar outra.", "Limite atingido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            //Verifica se a tarefa anterior está concluída
+                            var tarefaAnterior = context.Tarefas
+                                .Where(t => t.IdProgramador.Id == programador.Id && t.OrdemExecucao < tarefa.OrdemExecucao)
+                                .OrderByDescending(t => t.OrdemExecucao)
+                                .FirstOrDefault(t => t.EstadoAtual == EstadoAtual.ToDo);
+
+                            if (tarefaAnterior != null)
+                            {
+                                MessageBox.Show("As tarefas devem ser começadas pela ordem pretendida.", "Ordem de Execução", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            // Verifica se a tarefa anterior está concluída
+                            tarefaAnterior = context.Tarefas
+                                .Where(t => t.IdProgramador.Id == programador.Id && t.OrdemExecucao < tarefa.OrdemExecucao)
+                                .OrderByDescending(t => t.OrdemExecucao)
+                                .FirstOrDefault(t => t.EstadoAtual != EstadoAtual.Done);
+                        }
                         tarefa.EstadoAtual = EstadoAtual.Doing;
                         tarefa.DataRealInicio = DateTime.Now;
                         context.SaveChanges();
@@ -138,9 +181,19 @@ namespace iTasks
                 string descricaoSelecionada = lstDoing.SelectedItem.ToString();
                 using (var context = new ITaskContext())
                 {
-                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    var tarefa = context.Tarefas.Include("IdProgramador").FirstOrDefault(t => t.Descricao == descricaoSelecionada);
                     if (tarefa != null)
                     {
+                        string typeOfUser = frmKanbanController.typeOfUser(username);
+                        if (typeOfUser == "Programador")
+                        {
+                            var programador = frmKanbanController.programadorLogedIn(username);
+                            if (tarefa.IdProgramador == null || tarefa.IdProgramador.Id != programador.Id)
+                            {
+                                MessageBox.Show("Você só pode movimentar tarefas atribuídas a você.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
                         tarefa.EstadoAtual = EstadoAtual.ToDo;
                         context.SaveChanges();
                     }
@@ -161,9 +214,31 @@ namespace iTasks
                 string descricaoSelecionada = lstDoing.SelectedItem.ToString();
                 using (var context = new ITaskContext())
                 {
-                    var tarefa = context.Tarefas.FirstOrDefault(t => t.Descricao == descricaoSelecionada);
+                    var tarefa = context.Tarefas.Include("IdProgramador").FirstOrDefault(t => t.Descricao == descricaoSelecionada);
                     if (tarefa != null)
                     {
+                        string typeOfUser = frmKanbanController.typeOfUser(username);
+                        if (typeOfUser == "Programador")
+                        {
+                            var programador = frmKanbanController.programadorLogedIn(username);
+                            if (tarefa.IdProgramador == null || tarefa.IdProgramador.Id != programador.Id)
+                            {
+                                MessageBox.Show("Você só pode movimentar tarefas atribuídas a você.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            //Verificar se a tarefa anterior está concluída
+                            var tarefaAnterior = context.Tarefas
+                                .Where(t => t.IdProgramador.Id == programador.Id && t.OrdemExecucao < tarefa.OrdemExecucao)
+                                .OrderByDescending(t => t.OrdemExecucao)
+                                .FirstOrDefault(t => t.EstadoAtual != EstadoAtual.Done);
+
+                            if (tarefaAnterior != null)
+                            {
+                                MessageBox.Show("As tarefas devem ser finalizadas pela ordem pretendida.", "Ordem de Execução", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
                         tarefa.EstadoAtual = EstadoAtual.Done;
                         tarefa.DataRealFim = DateTime.Now;
                         context.SaveChanges();
