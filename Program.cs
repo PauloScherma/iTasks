@@ -18,7 +18,7 @@ namespace iTasks
                 //definir admin
                 //var admin = new Gestor { Nome = "admin", Username = "admin", Password = "admin", Departamento = Departamento.Administração, GereUtilizadores = true };
                 //db.Utilizadores.Add(admin);
-                ////definir gestores
+                //definir gestores
                 //var paulo = new Gestor { Nome = "paulo", Username = "paulo", Password = "paulo", Departamento = Departamento.Administração, GereUtilizadores = false };
                 //db.Utilizadores.Add(paulo);
                 //definir gestor do programdador

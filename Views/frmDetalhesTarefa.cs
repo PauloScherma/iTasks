@@ -14,11 +14,15 @@ namespace iTasks
 {
     public partial class frmDetalhesTarefa : Form
     {
-        public frmDetalhesTarefa()
+        private Gestor gestorCriador;
+
+        public frmDetalhesTarefa(Gestor gestor)
         {
             InitializeComponent();
 
-            cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores();
+            gestorCriador = gestor;
+
+            cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores(gestorCriador);
 
             cbTipoTarefa.DataSource = frmDetalhesTarefaController.mostrarTiposTarefas();
         }
@@ -85,6 +89,12 @@ namespace iTasks
 
         private void gravarDadosButton_Click(object sender, EventArgs e)
         {
+            if (txtDesc.Text.Trim() == string.Empty || cbTipoTarefa.SelectedValue == null || cbProgramador == null)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Atribuição de valores as variaveis
             string descricao = txtDesc.Text;
             TipoTarefa IdTipoTarefa = cbTipoTarefa.SelectedItem as TipoTarefa;
@@ -94,8 +104,21 @@ namespace iTasks
             DateTime DataPrevistaInicio = dtInicio.Value;
             DateTime DataPrevistaFim = dtFim.Value;
 
+            // Validação das datas
+            if (DataPrevistaInicio.Date < DateTime.Now.Date)
+            {
+                MessageBox.Show("A Data Prevista de Início não pode ser menor que a data atual.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (DataPrevistaFim.Date < DataPrevistaInicio.Date)
+            {
+                MessageBox.Show("A Data Prevista de Fim não pode ser menor que a Data Prevista de Início.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Chama o método gravarDados do controlador para salvar os dados
-            frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints);
+            frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints, gestorCriador);
 
             // Atualiza a lstTodo
             frmKanbanController.mostrarTodo();
