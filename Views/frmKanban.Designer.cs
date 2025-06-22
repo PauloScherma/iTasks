@@ -47,9 +47,10 @@
             this.btSetDoing = new System.Windows.Forms.Button();
             this.btSetDone = new System.Windows.Forms.Button();
             this.btSetTodo = new System.Windows.Forms.Button();
-            this.btNova = new System.Windows.Forms.Button();
+            this.novaTarefaButton = new System.Windows.Forms.Button();
             this.labelNomeUtilizador = new System.Windows.Forms.Label();
             this.btPrevisao = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -66,6 +67,7 @@
             this.lstTodo.Name = "lstTodo";
             this.lstTodo.Size = new System.Drawing.Size(395, 516);
             this.lstTodo.TabIndex = 0;
+            this.lstTodo.DoubleClick += new System.EventHandler(this.lstTodo_DoubleClick);
             // 
             // groupBox1
             // 
@@ -101,6 +103,7 @@
             this.lstDoing.Name = "lstDoing";
             this.lstDoing.Size = new System.Drawing.Size(395, 520);
             this.lstDoing.TabIndex = 0;
+            this.lstDoing.DoubleClick += new System.EventHandler(this.lstDoing_DoubleClick);
             // 
             // groupBox3
             // 
@@ -124,6 +127,7 @@
             this.lstDone.Name = "lstDone";
             this.lstDone.Size = new System.Drawing.Size(395, 520);
             this.lstDone.TabIndex = 0;
+            this.lstDone.DoubleClick += new System.EventHandler(this.lstDone_DoubleClick);
             // 
             // menuStrip1
             // 
@@ -134,6 +138,7 @@
             this.listagensToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1257, 28);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
@@ -152,6 +157,7 @@
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
             this.sairToolStripMenuItem.Size = new System.Drawing.Size(338, 26);
             this.sairToolStripMenuItem.Text = "Sair";
+            this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
             // 
             // exportarParaCSVToolStripMenuItem
             // 
@@ -214,6 +220,7 @@
             this.btSetDoing.TabIndex = 5;
             this.btSetDoing.Text = "Executar Tarefa >>";
             this.btSetDoing.UseVisualStyleBackColor = true;
+            this.btSetDoing.Click += new System.EventHandler(this.btSetDoing_Click);
             // 
             // btSetDone
             // 
@@ -224,6 +231,7 @@
             this.btSetDone.TabIndex = 6;
             this.btSetDone.Text = "Terminar Tarefa >>";
             this.btSetDone.UseVisualStyleBackColor = true;
+            this.btSetDone.Click += new System.EventHandler(this.btSetDone_Click);
             // 
             // btSetTodo
             // 
@@ -234,22 +242,24 @@
             this.btSetTodo.TabIndex = 7;
             this.btSetTodo.Text = "<< Reiniciar Tarefa";
             this.btSetTodo.UseVisualStyleBackColor = true;
+            this.btSetTodo.Click += new System.EventHandler(this.btSetTodo_Click);
             // 
-            // btNova
+            // novaTarefaButton
             // 
-            this.btNova.Location = new System.Drawing.Point(20, 618);
-            this.btNova.Margin = new System.Windows.Forms.Padding(4);
-            this.btNova.Name = "btNova";
-            this.btNova.Size = new System.Drawing.Size(139, 28);
-            this.btNova.TabIndex = 8;
-            this.btNova.Text = "Nova Tarefa";
-            this.btNova.UseVisualStyleBackColor = true;
+            this.novaTarefaButton.Location = new System.Drawing.Point(20, 618);
+            this.novaTarefaButton.Margin = new System.Windows.Forms.Padding(4);
+            this.novaTarefaButton.Name = "novaTarefaButton";
+            this.novaTarefaButton.Size = new System.Drawing.Size(139, 28);
+            this.novaTarefaButton.TabIndex = 8;
+            this.novaTarefaButton.Text = "Nova Tarefa";
+            this.novaTarefaButton.UseVisualStyleBackColor = true;
+            this.novaTarefaButton.Click += new System.EventHandler(this.novaTarefaButton_Click);
             // 
             // labelNomeUtilizador
             // 
             this.labelNomeUtilizador.AutoSize = true;
-            this.labelNomeUtilizador.Location = new System.Drawing.Point(1037, 42);
-            this.labelNomeUtilizador.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelNomeUtilizador.Location = new System.Drawing.Point(1383, 52);
+            this.labelNomeUtilizador.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelNomeUtilizador.Name = "labelNomeUtilizador";
             this.labelNomeUtilizador.Size = new System.Drawing.Size(187, 16);
             this.labelNomeUtilizador.TabIndex = 9;
@@ -265,14 +275,24 @@
             this.btPrevisao.Text = "Ver Previsão de Conclusão";
             this.btPrevisao.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(985, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(122, 16);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Nome de Utilizador";
+            // 
             // frmKanban
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1257, 661);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btPrevisao);
+            this.Controls.Add(this.novaTarefaButton);
             this.Controls.Add(this.labelNomeUtilizador);
-            this.Controls.Add(this.btNova);
             this.Controls.Add(this.btSetTodo);
             this.Controls.Add(this.btSetDone);
             this.Controls.Add(this.btSetDoing);
@@ -316,8 +336,12 @@
         private System.Windows.Forms.Button btSetDoing;
         private System.Windows.Forms.Button btSetDone;
         private System.Windows.Forms.Button btSetTodo;
-        private System.Windows.Forms.Button btNova;
+
+        private System.Windows.Forms.Button novaTarefaButton;
+
         private System.Windows.Forms.Label labelNomeUtilizador;
+
         private System.Windows.Forms.Button btPrevisao;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -18,6 +18,6 @@ namespace iTasks.Models
     public class Gestor : Utilizador
     {
         public Departamento Departamento { get; set; }
-        public bool GereUtilizadores { get; set; } 
+        public bool GereUtilizadores { get; set; }
     }
 }
