@@ -14,39 +14,72 @@ namespace iTasks
 {
     public partial class frmDetalhesTarefa : Form
     {
-        private Tarefa tarefaAtual;
-
         public frmDetalhesTarefa()
         {
             InitializeComponent();
 
             cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores();
-            cbProgramador.SelectedIndex = -1;
 
             cbTipoTarefa.DataSource = frmDetalhesTarefaController.mostrarTiposTarefas();
-            cbTipoTarefa.SelectedIndex = -1;
         }
 
-        // Novo construtor para edição
-        public frmDetalhesTarefa(Tarefa tarefa) : this()
+        public frmDetalhesTarefa(Tarefa tarefa, string username)
         {
-            tarefaAtual = tarefa;
-            if (tarefa != null)
+            InitializeComponent();
+
+            //atribuimos o tipo do utilizador logado à variavel
+            string typeOfUser = frmKanbanController.typeOfUser(username);
+
+            //verifica se é gestor ou programador e mostra a view correspondente
+            if (typeOfUser == "Gestor")
             {
+                //parte de baixo
                 txtDesc.Text = tarefa.Descricao;
                 nUpDownOrdem.Value = tarefa.OrdemExecucao;
                 nUpDownStoryPoints.Value = tarefa.StoryPoints;
                 dtInicio.Value = tarefa.DataPrevistaInicio;
                 dtFim.Value = tarefa.DataPrevistaFim;
+                //validar
+                cbProgramador.Text = tarefa.IdProgramador.Nome;
+                cbTipoTarefa.Text = tarefa.IdTipoTarefa.Nome;
+            }
+            //programador
+            else if (typeOfUser == "Programador")
+            {
+                txtDesc.Enabled = false;
+                nUpDownOrdem.Enabled = false;
+                nUpDownStoryPoints.Enabled = false;
+                dtInicio.Enabled = false;
+                dtFim.Enabled = false;
+                cbProgramador.Enabled = false;
+                cbTipoTarefa.Enabled = false;
+            }
 
-                // Seleciona o programador e tipo de tarefa corretos
-                cbProgramador.SelectedItem = cbProgramador.Items
-                    .OfType<Utilizador>()
-                    .FirstOrDefault(u => u.Id == tarefa.IdProgramador?.Id);
+            if (tarefa != null)
+            {
+                //parte de cima
+                txtId.Text = tarefa.Id.ToString();
+                txtDataCriacao.Text = tarefa.DataCriacao.ToString();
+                txtEstado.Text = tarefa.EstadoAtual.ToString();
+                txtDataRealini.Text = "Por definir";
+                txtDataRealFim.Text = "Por definir";
+                if (tarefa.EstadoAtual.ToString() == "Doing" || tarefa.EstadoAtual.ToString() == "Done")
+                    txtDataRealini.Text = tarefa.DataRealInicio.ToString();
+                if (tarefa.EstadoAtual.ToString() == "Done")
+                    txtDataRealFim.Text = tarefa.DataRealFim.ToString();
 
-                cbTipoTarefa.SelectedItem = cbTipoTarefa.Items
-                    .OfType<TipoTarefa>()
-                    .FirstOrDefault(t => t.Id == tarefa.IdTipoTarefa?.Id);
+                //parte de baixo
+                txtDesc.Text = tarefa.Descricao;
+                nUpDownOrdem.Value = tarefa.OrdemExecucao;
+                nUpDownStoryPoints.Value = tarefa.StoryPoints;
+                dtInicio.Value = tarefa.DataPrevistaInicio;
+                dtFim.Value = tarefa.DataPrevistaFim;
+                //validar
+                cbProgramador.Text = tarefa.IdProgramador.Nome;
+                cbTipoTarefa.Text = tarefa.IdTipoTarefa.Nome;
+
+                cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores();
+                cbTipoTarefa.DataSource = frmDetalhesTarefaController.mostrarTiposTarefas();
             }
         }
 

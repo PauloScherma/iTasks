@@ -16,5 +16,10 @@ namespace iTasks
         {
             InitializeComponent();
         }
+
+        private void gvTarefasConcluidas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

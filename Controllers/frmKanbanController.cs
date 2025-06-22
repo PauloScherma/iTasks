@@ -58,7 +58,7 @@ namespace iTasks.Controllers
             using (var db = new ITaskContext())
             {
                 //mostrar na lstBox as Tarefas
-                var allTarefaList = db.Tarefas.ToList()
+                var allTarefaList = db.Tarefas.Include("IdTipoTarefa").Include("IdProgramador").ToList()
                 .Where(t => t.EstadoAtual == EstadoAtual.ToDo)
                 .ToList();
                 return allTarefaList;
@@ -70,7 +70,7 @@ namespace iTasks.Controllers
             using (var db = new ITaskContext())
             {
                 //mostrar na lstBox as Tarefas
-                var allTarefaList = db.Tarefas.ToList()
+                var allTarefaList = db.Tarefas.Include("IdTipoTarefa").Include("IdProgramador").ToList()
                 .Where(t => t.EstadoAtual == EstadoAtual.Doing)
                 .ToList();
                 return allTarefaList;
@@ -82,7 +82,7 @@ namespace iTasks.Controllers
             using (var db = new ITaskContext())
             {
                 //mostrar na lstBox as Tarefas
-                var allTarefaList = db.Tarefas.ToList()
+                var allTarefaList = db.Tarefas.Include("IdTipoTarefa").Include("IdProgramador").ToList()
                 .Where(t => t.EstadoAtual == EstadoAtual.Done)
                 .ToList();
                 return allTarefaList;

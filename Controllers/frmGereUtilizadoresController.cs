@@ -1,6 +1,7 @@
 ﻿using iTasks.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace iTasks.Controllers
                     progExistente.Password = passProg;
                     progExistente.NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg);
                     progExistente.Gestor = gestorProg;
+
                     //altera os dados
                     db.SaveChanges();
                     MessageBox.Show("Username já existe. Os dados dele foram alterados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -37,7 +39,8 @@ namespace iTasks.Controllers
                         Username = usernameProg,
                         Password = passProg,
                         NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg),
-                        Gestor = gestorProg
+                        //carregar antes de atribuir para não dublicar
+                        Gestor = db.Gestores.Find(gestorProg.Id)
                     };
                     //adicionar e gravar no contexto
                     db.Programadores.Add(novoProgramador);
@@ -79,6 +82,17 @@ namespace iTasks.Controllers
                     db.Gestores.Add(novoGestor);
                     db.SaveChanges();
                     MessageBox.Show("Gestor gravado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    string texto = "abc";
+                    string texto2 = texto;
+                    texto2 = "outro";
+
+                    int[] numeros = new int[] { 1, 2, 3 };
+                    int[] numeros2 = numeros;
+                    numeros2[0] = 10;
+
+                    // numeros2 - 10,2,3
+                    // numeros-  1,2,3
                 }
             }
         }
@@ -99,11 +113,12 @@ namespace iTasks.Controllers
             using (var db = new ITaskContext())
             {
                 //mostrar na comboBox os Programadores
-                var allProgramadorList = db.Programadores.ToList();
+                var allProgramadorList = db.Programadores.Include("Gestor").ToList();
                 //retornar a lista
                 return allProgramadorList;
             }
         }
+        //excluir gestor
         public static void excluirGestor(int gestorId)
         {
             using (var db = new ITaskContext())
@@ -112,6 +127,13 @@ namespace iTasks.Controllers
                 var gestor = db.Gestores.Find(gestorId);
                 if (gestor != null)
                 {
+                    //verifica se o gestor tem programadores associados
+                    var programadoresAssociados = db.Programadores.Any(p => p.Gestor.Id == gestorId);
+                    if (programadoresAssociados)
+                    {
+                        MessageBox.Show("Não é possível excluir este gestor, pois ele tem programadores associados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     //remover o gestor do contexto
                     db.Gestores.Remove(gestor);
                     db.SaveChanges();
@@ -123,6 +145,7 @@ namespace iTasks.Controllers
                 }
             }
         }
+        //excluir programador
         public static void excluirProgramador(int progId)
         {
             using (var db = new ITaskContext())

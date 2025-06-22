@@ -19,10 +19,10 @@ namespace iTasks.Models
     public class Tarefa
     {
         public int Id { get; set; }
-        //chave estrangeira - Utilizador
-        public Utilizador IdGestor { get; set; }
-        //chave estrangeira - Utilizador
-        public Utilizador IdProgramador { get; set; }
+        //chave estrangeira - Gestor
+        public Gestor IdGestor { get; set; }
+        //chave estrangeira - Programador
+        public Programador IdProgramador { get; set; }
         public int OrdemExecucao { get; set; }
         public string Descricao { get; set; }
         public DateTime DataPrevistaInicio { get; set; }
@@ -33,7 +33,6 @@ namespace iTasks.Models
         public DateTime DataRealInicio { get; set; }
         public DateTime DataCriacao { get; set; }
         public EstadoAtual EstadoAtual { get; set; }
-
         public DateTime DataRealFim { get; set; }
 
         public override string ToString()
@@ -49,5 +48,4 @@ namespace iTasks.Models
             }
         }
     }
-
 }

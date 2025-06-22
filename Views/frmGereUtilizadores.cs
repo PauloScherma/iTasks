@@ -79,6 +79,13 @@ namespace iTasks
         //gravar gestor
         private void btGravarGestor_Click(object sender, EventArgs e)
         {
+            //verificações
+            if (txtNomeGestor.Text.Trim() == string.Empty || txtUsernameGestor.Text.Trim() == string.Empty || txtPasswordGestor.Text.Trim() == string.Empty || cbDepartamento.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //atribui valores
             string nomeGestor = txtNomeGestor.Text.Trim();
             string usernameGestor= txtUsernameGestor.Text.Trim();
@@ -92,10 +99,23 @@ namespace iTasks
             //atualiza a listBox
             lstListaGestores.DataSource = null;
             lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            lstListaGestores.SelectedIndex = -1;
+
+
+            //mostrar na comboBox os Gestores
+            cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            cbGestorProg.SelectedIndex = -1;
         }
         //gravar programador
         private void btGravarProg_Click(object sender, EventArgs e)
         {
+            //verificações
+            if (txtNomeProg.Text.Trim() == string.Empty || txtUsernameProg.Text.Trim() == string.Empty || txtPasswordProg.Text.Trim() == string.Empty || cbNivelProg.SelectedValue == null || cbGestorProg.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor, preencha todos os campos", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //atribui valores
             string nomeProg = txtNomeProg.Text.Trim();
             string usernameProg = txtUsernameProg.Text.Trim();
@@ -109,6 +129,7 @@ namespace iTasks
             //atualiza a listBox
             lstListaProgramadores.DataSource = null;
             lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
+            lstListaProgramadores.SelectedIndex = -1;
         }
         //mostra o utilizagestor selecionado
         private void lstListaGestores_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,7 +183,7 @@ namespace iTasks
                 txtUsernameProg.Text = progSelecionado.Username;
                 txtPasswordProg.Text = progSelecionado.Password;
                 cbNivelProg.SelectedItem = progSelecionado.NivelExperiencia;
-                //cbGestorProg.SelectedValue = progSelecionado.Gestor;
+                cbGestorProg.Text = progSelecionado.Gestor.Nome;
             }
         }
         //excluir gestor
@@ -172,6 +193,14 @@ namespace iTasks
             Gestor gestorSelecionado = (Gestor)lstListaGestores.SelectedItem;
             int IdGestor = gestorSelecionado.Id;
             frmGereUtilizadoresController.excluirGestor(IdGestor);
+
+            //atualiza as listBoxs
+            lstListaGestores.DataSource = null;
+            lstListaGestores.DataSource = frmGereUtilizadoresController.mostrarGestores();
+
+            //mostrar na comboBox os Gestores
+            cbGestorProg.DataSource = frmGereUtilizadoresController.mostrarGestores();
+            cbGestorProg.SelectedIndex = -1;
         }
         //excluir programador
         private void button2_Click(object sender, EventArgs e)
@@ -180,6 +209,10 @@ namespace iTasks
             Programador progSelecionado = (Programador)lstListaProgramadores.SelectedItem;
             int IdProg = progSelecionado.Id;
             frmGereUtilizadoresController.excluirProgramador(IdProg);
+
+            //atualiza as listBoxs
+            lstListaProgramadores.DataSource = null;
+            lstListaProgramadores.DataSource = frmGereUtilizadoresController.mostrarProgramadores();
         }
     }
 }

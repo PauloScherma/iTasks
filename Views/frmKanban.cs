@@ -24,6 +24,8 @@ namespace iTasks
             lstDoing.DataSource = frmKanbanController.mostrarDoing();
             lstDone.DataSource = frmKanbanController.mostrarDone();
 
+            label1.Text = "Nome de utilizador: " + username;
+
             //atribuimos o tipo do utilizador logado à variavel
             string typeOfUser = frmKanbanController.typeOfUser(username);
 
@@ -57,7 +59,7 @@ namespace iTasks
                 utilizadoresToolStripMenuItem.Visible = false;
             }
 
-            // Assign the username from the logged-in user
+            // atribui o username ao "username"
             this.username = userLogin.Username;
         }
 
@@ -104,7 +106,6 @@ namespace iTasks
             if (result == DialogResult.No)
                 e.Cancel = true;
         }
-
 
         private void btSetDoing_Click(object sender, EventArgs e)
         {
@@ -181,7 +182,8 @@ namespace iTasks
         {
             if (lstTodo.SelectedItem is Tarefa tarefaSelecionada)
             {
-                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                string username = this.username;
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada, username);
                 frm.ShowDialog();
                 lstTodo.DataSource = frmKanbanController.mostrarTodo();
                 lstDoing.DataSource = frmKanbanController.mostrarDoing();
@@ -193,7 +195,8 @@ namespace iTasks
         {
             if (lstDoing.SelectedItem is Tarefa tarefaSelecionada)
             {
-                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                string username = this.username;
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada, username);
                 frm.ShowDialog();
                 lstTodo.DataSource = frmKanbanController.mostrarTodo();
                 lstDoing.DataSource = frmKanbanController.mostrarDoing();
@@ -203,14 +206,24 @@ namespace iTasks
 
         private void lstDone_DoubleClick(object sender, EventArgs e)
         {
-            if (lstDone.SelectedItem is Tarefa tarefaSelecionada)
+            if (lstDone.SelectedIndex != -1)
             {
-                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada);
+                Tarefa tarefaSelecionada = (Tarefa)lstDone.SelectedItem;
+                string username = this.username; 
+                frmDetalhesTarefa frm = new frmDetalhesTarefa(tarefaSelecionada, username);
                 frm.ShowDialog();
                 lstTodo.DataSource = frmKanbanController.mostrarTodo();
                 lstDoing.DataSource = frmKanbanController.mostrarDoing();
                 lstDone.DataSource = frmKanbanController.mostrarDone();
             }
+        }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+            frmLogin frmLogin = new frmLogin();
+            frmLogin.Show();
         }
     }
 }

@@ -17,26 +17,41 @@ namespace iTasks.Controllers
                 // Buscar o TipoTarefa existente pelo Id
                 var tipoTarefaExistente = context.TiposTarefa.Find(IdTipoTarefa.Id);
                 var programadorExistente = context.Programadores.Find(IdProgramador.Id);
+                var tarefaExistente = context.Tarefas.FirstOrDefault(t => t.Descricao == descricao);
 
-                var tarefa = new Tarefa
+                if (tarefaExistente == null) 
+                { 
+                    var tarefa = new Tarefa
+                    {
+                        IdProgramador = programadorExistente,
+                        OrdemExecucao = OrdemExecucao,
+                        Descricao = descricao,
+                        DataPrevistaInicio = DataPrevistaInicio,
+                        DataPrevistaFim = DataPrevistaFim,
+                        IdTipoTarefa = tipoTarefaExistente, 
+                        StoryPoints = StoryPoints,
+                        DataCriacao = DateTime.Now,
+                        DataRealInicio = new DateTime (2000, 1, 1),
+                        DataRealFim = new DateTime(2000, 1, 1),
+                    };
+
+                    context.Tarefas.Add(tarefa);
+                }
+                else
                 {
-                    IdProgramador = IdProgramador,
-                    OrdemExecucao = OrdemExecucao,
-                    Descricao = descricao,
-                    DataPrevistaInicio = DataPrevistaInicio,
-                    DataPrevistaFim = DataPrevistaFim,
-                    IdTipoTarefa = tipoTarefaExistente, // Associar o objeto rastreado
-                    StoryPoints = StoryPoints,
-                    DataCriacao = DateTime.Now,
-                    DataRealInicio = new DateTime (2000, 1, 1),
-                    DataRealFim = new DateTime(2000, 1, 1),
-                };
-
-                context.Tarefas.Add(tarefa);
+                    tarefaExistente.IdProgramador = programadorExistente;
+                    tarefaExistente.OrdemExecucao = OrdemExecucao;
+                    tarefaExistente.Descricao = descricao;
+                    tarefaExistente.DataPrevistaInicio = DataPrevistaInicio;
+                    tarefaExistente.DataPrevistaFim = DataPrevistaFim;
+                    tarefaExistente.IdTipoTarefa = tipoTarefaExistente;
+                    tarefaExistente.StoryPoints = StoryPoints;
+                    tarefaExistente.DataCriacao = DateTime.Now;
+                    tarefaExistente.DataRealInicio = new DateTime(2000, 1, 1);
+                    tarefaExistente.DataRealFim = new DateTime(2000, 1, 1);
+                }
+                
                 context.SaveChanges();
-
-
-
             }
         }
         public static List<Programador> mostrarProgramadores()
