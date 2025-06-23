@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\frmConsultarTarefasEmCursoController.cs" />
+    <Compile Include="Controllers\frmConsultarTarefasConcluidasController.cs" />
     <Compile Include="Controllers\frmGereUtilizadoresController.cs" />
     <Compile Include="Controllers\frmDetalhesTarefaController.cs" />
     <Compile Include="Controllers\frmGereTiposTarefasController.cs" />
