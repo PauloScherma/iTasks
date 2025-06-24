@@ -16,7 +16,7 @@ namespace iTasks.Controllers
         {
             public int Id { get; set; }
             public string Descricao { get; set; }
-            public Programador Nome { get; set; }
+            public Programador NomeProgramador { get; set; }
             public int OrdemExecucao { get; set; }
             public DateTime DataPrevistaInicio { get; set; }
             public DateTime DataPrevistaFim { get; set; }
@@ -37,7 +37,7 @@ namespace iTasks.Controllers
                     .Select(t => new TarefaConcluidas
                     {
                         Id = t.Id,
-                        Nome = t.IdProgramador,
+                        NomeProgramador = t.IdProgramador,
                         Descricao = t.Descricao,
                         OrdemExecucao = t.OrdemExecucao,
                         DataCriacao = t.DataCriacao,
@@ -59,7 +59,7 @@ namespace iTasks.Controllers
                     .Select(t => new TarefaConcluidas
                     {
                         Id = t.Id,
-                        Nome = t.IdProgramador,
+                        NomeProgramador = t.IdProgramador,
                         Descricao = t.Descricao,
                         OrdemExecucao = t.OrdemExecucao,
                         DataCriacao = t.DataCriacao,

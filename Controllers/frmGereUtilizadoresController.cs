@@ -24,7 +24,8 @@ namespace iTasks.Controllers
                     progExistente.Username = usernameProg;
                     progExistente.Password = passProg;
                     progExistente.NivelExperiencia = (NivelExperiencia)Enum.Parse(typeof(NivelExperiencia), nivelProg);
-                    progExistente.Gestor = gestorProg;
+                    //carregar antes de atribuir para não dublicar
+                    progExistente.Gestor = db.Gestores.Find(gestorProg.Id);
 
                     //altera os dados
                     db.SaveChanges();
