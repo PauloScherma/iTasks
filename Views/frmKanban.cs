@@ -58,6 +58,7 @@ namespace iTasks
                 novaTarefaButton.Hide();
                 utilizadoresToolStripMenuItem.Visible = false;
                 tarefasEmCursoToolStripMenuItem.Visible = false;
+                btPrevisao.Hide();
             }
 
             // atribui o username ao "username"
@@ -66,6 +67,12 @@ namespace iTasks
 
         //botões que abrem outros forms
         #region
+
+        private void btPrevisao_Click(object sender, EventArgs e)
+        {
+            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso();
+            frmConsultaTarefasEmCurso.ShowDialog();
+        }
 
         private void tarefasTerminadasToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -85,12 +92,15 @@ namespace iTasks
                 frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas(userLogin);
                 frmConsultarTarefasConcluidas.ShowDialog();
             }
-
         }
 
         private void tarefasEmCursoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso();
+            //atribuimos o tipo do utilizador logado à variavel
+            string typeOfUser = frmKanbanController.typeOfUser(username);
+
+            Gestor userLogin = frmKanbanController.gestorLogedIn(username);
+            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso(userLogin);
             frmConsultaTarefasEmCurso.ShowDialog();
         }
 

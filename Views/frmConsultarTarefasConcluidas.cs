@@ -27,7 +27,7 @@ namespace iTasks
             tempoEmDias.DefaultCellStyle.Format = "F8";
             var tempoPrevisto = gvTarefasConcluidas.Columns["TempoPrevisto"];
             tempoPrevisto.Visible = false;
-            var nome = gvTarefasConcluidas.Columns["Nome"];
+            var nome = gvTarefasConcluidas.Columns["NomeProgramador"];
             nome.Visible = false;
         }
         //caso seja gestor
