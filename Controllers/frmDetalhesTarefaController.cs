@@ -50,7 +50,7 @@ namespace iTasks.Controllers
                     tarefaExistente.DataCriacao = DateTime.Now;
                     tarefaExistente.DataRealInicio = new DateTime(2000, 1, 1);
                     tarefaExistente.DataRealFim = new DateTime(2000, 1, 1);
-                    tarefaExistente.IdGestor = gestorExistente; // Atualiza o gestor
+                    tarefaExistente.IdGestor = gestorCriador; // Atualiza o gestor
                 }
 
                 context.SaveChanges();
@@ -85,6 +85,15 @@ namespace iTasks.Controllers
                 var allTipoTarefaList = db.TiposTarefa.ToList();
                 //retornar a lista
                 return allTipoTarefaList;
+            }
+        }
+
+        public static bool ExisteOrdemParaProgramador(Utilizador programador, int ordemExecucao)
+        {
+            using (var context = new ITaskContext())
+            {
+                return context.Tarefas
+                    .Any(t => t.IdProgramador.Id == programador.Id && t.OrdemExecucao == ordemExecucao);
             }
         }
     }
