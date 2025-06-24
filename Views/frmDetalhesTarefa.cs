@@ -21,6 +21,7 @@ namespace iTasks
             InitializeComponent();
 
             gestorCriador = gestor;
+            txtGestor.Text = gestorCriador.Nome;
 
             cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores(gestorCriador);
 
@@ -37,6 +38,9 @@ namespace iTasks
             //verifica se é gestor ou programador e mostra a view correspondente
             if (typeOfUser == "Gestor")
             {
+                gestorCriador = frmKanbanController.gestorLogedIn(username);
+                txtGestor.Text = gestorCriador.Nome;
+
                 //parte de baixo
                 txtDesc.Text = tarefa.Descricao;
                 nUpDownOrdem.Value = tarefa.OrdemExecucao;
@@ -58,7 +62,6 @@ namespace iTasks
                 cbProgramador.Enabled = false;
                 cbTipoTarefa.Enabled = false;
             }
-
             if (tarefa != null)
             {
                 //parte de cima
@@ -82,8 +85,16 @@ namespace iTasks
                 cbProgramador.Text = tarefa.IdProgramador.Nome;
                 cbTipoTarefa.Text = tarefa.IdTipoTarefa.Nome;
 
-                cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores();
+                cbProgramador.DataSource = frmDetalhesTarefaController.mostrarProgramadores(gestorCriador);
                 cbTipoTarefa.DataSource = frmDetalhesTarefaController.mostrarTiposTarefas();
+
+                cbProgramador.SelectedItem = cbProgramador.Items
+                    .OfType<Programador>()
+                    .FirstOrDefault(p => p.Id == tarefa.IdProgramador.Id);
+
+                cbTipoTarefa.SelectedItem = cbTipoTarefa.Items
+                    .OfType<TipoTarefa>()
+                    .FirstOrDefault(t => t.Id == tarefa.IdTipoTarefa.Id);
             }
         }
 
@@ -114,6 +125,13 @@ namespace iTasks
             if (DataPrevistaFim.Date < DataPrevistaInicio.Date)
             {
                 MessageBox.Show("A Data Prevista de Fim não pode ser menor que a Data Prevista de Início.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validação de ordem duplicada para o mesmo programador
+            if (frmDetalhesTarefaController.ExisteOrdemParaProgramador(IdProgramador, OrdemExecucao))
+            {
+                MessageBox.Show("Já existe uma tarefa com esta ordem para o programador selecionado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

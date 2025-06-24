@@ -57,6 +57,8 @@ namespace iTasks
                 //escoder coisas
                 novaTarefaButton.Hide();
                 utilizadoresToolStripMenuItem.Visible = false;
+                tarefasEmCursoToolStripMenuItem.Visible = false;
+                btPrevisao.Hide();
             }
 
             // atribui o username ao "username"
@@ -66,28 +68,52 @@ namespace iTasks
         //botões que abrem outros forms
         #region
 
+        private void btPrevisao_Click(object sender, EventArgs e)
+        {
+            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso();
+            frmConsultaTarefasEmCurso.ShowDialog();
+        }
+
         private void tarefasTerminadasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas();
-            frmConsultarTarefasConcluidas.Show();
+            //atribuimos o tipo do utilizador logado à variavel
+            string typeOfUser = frmKanbanController.typeOfUser(username);
+
+            //verifica se é gestor ou programador e mostra a view correspondente
+            if (typeOfUser == "Programador")
+            {
+                Programador userLogin = frmKanbanController.programadorLogedIn(username);
+                frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas(userLogin);
+                frmConsultarTarefasConcluidas.ShowDialog();
+            }
+            else
+            {
+                Gestor userLogin = frmKanbanController.gestorLogedIn(username);
+                frmConsultarTarefasConcluidas frmConsultarTarefasConcluidas = new frmConsultarTarefasConcluidas(userLogin);
+                frmConsultarTarefasConcluidas.ShowDialog();
+            }
         }
 
         private void tarefasEmCursoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso();
-            frmConsultaTarefasEmCurso.Show();
+            //atribuimos o tipo do utilizador logado à variavel
+            string typeOfUser = frmKanbanController.typeOfUser(username);
+
+            Gestor userLogin = frmKanbanController.gestorLogedIn(username);
+            frmConsultaTarefasEmCurso frmConsultaTarefasEmCurso = new frmConsultaTarefasEmCurso(userLogin);
+            frmConsultaTarefasEmCurso.ShowDialog();
         }
 
         private void gerirUtilizadoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGereUtilizadores frmGereUtilizadores = new frmGereUtilizadores(username);
-            frmGereUtilizadores.Show();
+            frmGereUtilizadores.ShowDialog();
         }
 
         private void gerirTiposDeTarefasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmGereTiposTarefas frmGereTiposTarefas = new frmGereTiposTarefas();
-            frmGereTiposTarefas.Show();
+            frmGereTiposTarefas.ShowDialog();
         }
 
         private void novaTarefaButton_Click(object sender, EventArgs e)
