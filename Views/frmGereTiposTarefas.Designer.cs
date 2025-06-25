@@ -35,6 +35,7 @@
             this.txtId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btGravar = new System.Windows.Forms.Button();
+            this.btExcluirTipoTarefa = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.lstLista.Name = "lstLista";
             this.lstLista.Size = new System.Drawing.Size(268, 366);
             this.lstLista.TabIndex = 0;
+            this.lstLista.SelectedIndexChanged += new System.EventHandler(this.lstLista_SelectedIndexChanged);
             // 
             // txtDesc
             // 
@@ -100,11 +102,22 @@
             this.btGravar.UseVisualStyleBackColor = true;
             this.btGravar.Click += new System.EventHandler(this.btGravar_Click);
             // 
+            // btExcluirTipoTarefa
+            // 
+            this.btExcluirTipoTarefa.Location = new System.Drawing.Point(506, 124);
+            this.btExcluirTipoTarefa.Name = "btExcluirTipoTarefa";
+            this.btExcluirTipoTarefa.Size = new System.Drawing.Size(139, 23);
+            this.btExcluirTipoTarefa.TabIndex = 32;
+            this.btExcluirTipoTarefa.Text = "Excluir dados";
+            this.btExcluirTipoTarefa.UseVisualStyleBackColor = true;
+            this.btExcluirTipoTarefa.Click += new System.EventHandler(this.btExcluirTipoTarefa_Click);
+            // 
             // frmGereTiposTarefas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 404);
+            this.Controls.Add(this.btExcluirTipoTarefa);
             this.Controls.Add(this.btGravar);
             this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.label4);
@@ -128,5 +141,6 @@
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btGravar;
+        private System.Windows.Forms.Button btExcluirTipoTarefa;
     }
 }

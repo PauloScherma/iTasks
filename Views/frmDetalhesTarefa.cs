@@ -100,16 +100,19 @@ namespace iTasks
 
         private void gravarDadosButton_Click(object sender, EventArgs e)
         {
-            if (txtDesc.Text.Trim() == string.Empty || cbTipoTarefa.SelectedValue == null || cbProgramador == null)
+            // Validação dos campos obrigatórios
+            if (txtDesc.Text.Trim() == string.Empty ||
+                cbTipoTarefa.SelectedItem == null ||
+                cbProgramador.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, preencha todos os campos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Atribuição de valores as variaveis
+            // Atribuição de valores às variáveis
             string descricao = txtDesc.Text;
             TipoTarefa IdTipoTarefa = cbTipoTarefa.SelectedItem as TipoTarefa;
-            Utilizador IdProgramador = cbProgramador.SelectedItem as Utilizador;
+            Programador IdProgramador = cbProgramador.SelectedItem as Programador;
             int OrdemExecucao = (int)nUpDownOrdem.Value;
             int StoryPoints = (int)nUpDownStoryPoints.Value;
             DateTime DataPrevistaInicio = dtInicio.Value;
@@ -135,13 +138,46 @@ namespace iTasks
                 return;
             }
 
+            int.TryParse(txtId.Text, out int tarefaId);
+
             // Chama o método gravarDados do controlador para salvar os dados
-            frmDetalhesTarefaController.gravarDados(IdProgramador, OrdemExecucao, descricao, DataPrevistaInicio, DataPrevistaFim, IdTipoTarefa, StoryPoints, gestorCriador);
+            frmDetalhesTarefaController.gravarDados(
+                tarefaId,
+                IdProgramador,
+                OrdemExecucao,
+                descricao,
+                DataPrevistaInicio,
+                DataPrevistaFim,
+                IdTipoTarefa,
+                StoryPoints,
+                gestorCriador
+            );
+
+            // Exibe aviso de criação ou edição
+            if (tarefaId == 0)
+                MessageBox.Show("Tarefa criada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Tarefa editada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Atualiza a lstTodo
             frmKanbanController.mostrarTodo();
 
             this.Close();
+        }
+
+        private void btExcluir_Click(object sender, EventArgs e)
+        {
+            string IdTarefa = txtId.Text;
+            if (IdTarefa == null)
+            {
+                MessageBox.Show("Impossivél excluir uma tarefa que ainda não foi criada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            frmDetalhesTarefaController.excluirTarefa(IdTarefa);
+
+            frmKanbanController.mostrarTodo();
+            frmKanbanController.mostrarDoing();
+            frmKanbanController.mostrarDone();
         }
     }
 }

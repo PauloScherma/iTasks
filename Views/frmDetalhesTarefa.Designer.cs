@@ -57,6 +57,7 @@
             this.nUpDownStoryPoints = new System.Windows.Forms.NumericUpDown();
             this.txtGestor = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.btExcluir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownOrdem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDownStoryPoints)).BeginInit();
             this.SuspendLayout();
@@ -304,11 +305,22 @@
             this.label13.TabIndex = 35;
             this.label13.Text = "Gestor:";
             // 
+            // btExcluir
+            // 
+            this.btExcluir.Location = new System.Drawing.Point(268, 319);
+            this.btExcluir.Name = "btExcluir";
+            this.btExcluir.Size = new System.Drawing.Size(141, 23);
+            this.btExcluir.TabIndex = 36;
+            this.btExcluir.Text = "Excluir Dados";
+            this.btExcluir.UseVisualStyleBackColor = true;
+            this.btExcluir.Click += new System.EventHandler(this.btExcluir_Click);
+            // 
             // frmDetalhesTarefa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(575, 366);
+            this.Controls.Add(this.btExcluir);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtGestor);
             this.Controls.Add(this.nUpDownStoryPoints);
@@ -378,5 +390,6 @@
         private System.Windows.Forms.NumericUpDown nUpDownStoryPoints;
         private System.Windows.Forms.TextBox txtGestor;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btExcluir;
     }
 }
