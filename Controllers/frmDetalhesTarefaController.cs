@@ -5,19 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iTasks;
+using System.Windows.Forms;
 
 namespace iTasks.Controllers
 {
     internal class frmDetalhesTarefaController
     {
-        public static void gravarDados(Utilizador IdProgramador, int OrdemExecucao, string descricao, DateTime DataPrevistaInicio, DateTime DataPrevistaFim, TipoTarefa IdTipoTarefa, int StoryPoints, Gestor gestorCriador)
+        public static void gravarDados(int tarefaId, Utilizador IdProgramador, int OrdemExecucao, string descricao, DateTime DataPrevistaInicio, DateTime DataPrevistaFim, TipoTarefa IdTipoTarefa, int StoryPoints, Gestor gestorCriador)
         {
             using (var context = new ITaskContext())
             {
                 var tipoTarefaExistente = context.TiposTarefa.Find(IdTipoTarefa.Id);
                 var programadorExistente = context.Programadores.Find(IdProgramador.Id);
                 var gestorExistente = context.Gestores.Find(gestorCriador.Id);
-                var tarefaExistente = context.Tarefas.FirstOrDefault(t => t.Descricao == descricao);
+
+                Tarefa tarefaExistente = null;
+                if (tarefaId > 0)
+                {
+                    tarefaExistente = context.Tarefas.Find(tarefaId);
+                }
 
                 if (tarefaExistente == null)
                 {
@@ -33,7 +39,7 @@ namespace iTasks.Controllers
                         DataCriacao = DateTime.Now,
                         DataRealInicio = new DateTime(2000, 1, 1),
                         DataRealFim = new DateTime(2000, 1, 1),
-                        IdGestor = gestorExistente // Preenche o gestor automaticamente
+                        IdGestor = gestorExistente
                     };
 
                     context.Tarefas.Add(tarefa);
@@ -50,7 +56,7 @@ namespace iTasks.Controllers
                     tarefaExistente.DataCriacao = DateTime.Now;
                     tarefaExistente.DataRealInicio = new DateTime(2000, 1, 1);
                     tarefaExistente.DataRealFim = new DateTime(2000, 1, 1);
-                    tarefaExistente.IdGestor = gestorCriador; // Atualiza o gestor
+                    tarefaExistente.IdGestor = gestorExistente;
                 }
 
                 context.SaveChanges();
@@ -94,6 +100,30 @@ namespace iTasks.Controllers
             {
                 return context.Tarefas
                     .Any(t => t.IdProgramador.Id == programador.Id && t.OrdemExecucao == ordemExecucao);
+            }
+        }
+        public static void excluirTarefa(string IdTarefa)
+        {
+            using (var db = new ITaskContext())
+            {
+                if (int.TryParse(IdTarefa, out int tarefaId))
+                {
+                    var tarefa = db.Tarefas.Find(tarefaId);
+                    if (tarefa != null)
+                    {
+                        db.Tarefas.Remove(tarefa);
+                        db.SaveChanges();
+                        MessageBox.Show("Tarefa excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tarefa não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Impossivél excluir tarefa antes de criar.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

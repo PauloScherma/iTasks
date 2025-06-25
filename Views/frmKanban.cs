@@ -326,6 +326,61 @@ namespace iTasks
             frmLogin frmLogin = new frmLogin();
             frmLogin.Show();
         }
+
+        private void exportarParaCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Verifica se o utilizador logado é um Gestor
+            string typeOfUser = frmKanbanController.typeOfUser(username);
+            if (typeOfUser != "Gestor")
+            {
+                MessageBox.Show("Apenas gestores podem exportar tarefas concluídas.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Busca as tarefas concluídas 
+            var tarefasDone = frmKanbanController.mostrarDone();
+
+
+            if (tarefasDone.Count == 0)
+            {
+                MessageBox.Show("Não existem tarefas concluídas para exportar.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Abre diálogo para escolher onde salvar o ficheiro
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "CSV files (*.csv)|*.csv";
+                dlg.Title = "Exportar Tarefas Concluídas";
+                dlg.FileName = "tarefas_concluidas.csv";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    var sb = new StringBuilder();
+
+                    // Cabeçalho
+                    sb.AppendLine("Programador;Descricao;DataPrevistaInicio;DataPrevistaFim;TipoTarefa;DataRealInicio;DataRealFim");
+
+                    // Linhas de dados
+                    foreach (var tarefa in tarefasDone)
+                    {
+                        string programador = tarefa.IdProgramador != null ? tarefa.IdProgramador.Nome : "";
+                        string descricao = tarefa.Descricao?.Replace(";", ",") ?? "";
+                        string dataPrevistaInicio = tarefa.DataPrevistaInicio.ToString("yyyy-MM-dd");
+                        string dataPrevistaFim = tarefa.DataPrevistaFim.ToString("yyyy-MM-dd");
+                        string tipoTarefa = tarefa.IdTipoTarefa != null ? tarefa.IdTipoTarefa.Nome : "";
+                        string dataRealInicio = tarefa.DataRealInicio != DateTime.MinValue ? tarefa.DataRealInicio.ToString("yyyy-MM-dd") : "";
+                        string dataRealFim = tarefa.DataRealFim != DateTime.MinValue ? tarefa.DataRealFim.ToString("yyyy-MM-dd") : "";
+
+                        sb.AppendLine($"{programador};{descricao};{dataPrevistaInicio};{dataPrevistaFim};{tipoTarefa};{dataRealInicio};{dataRealFim}");
+                    }
+
+                    // Escreve o ficheiro
+                    System.IO.File.WriteAllText(dlg.FileName, sb.ToString(), Encoding.UTF8);
+                    MessageBox.Show("Exportação concluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 }
 
