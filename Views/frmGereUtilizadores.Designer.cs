@@ -434,7 +434,7 @@
             this.Controls.Add(this.groupBox2);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmGereUtilizadores";
-            this.Text = "frmListaUtilizadores";
+            this.Text = "Gerir Utilizadores";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

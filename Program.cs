@@ -12,29 +12,32 @@ namespace iTasks
         [STAThread]
         static void Main()
         {
-            ////criar base de dados
-            //using (var db = new ITaskContext())
-            //{
-            //    //definir admin
-            //    var admin = new Gestor {
-            //        Nome = "admin", 
-            //        Username = "admin", 
-            //        Password = "admin", 
-            //        Departamento = Departamento.Administração, 
-            //        GereUtilizadores = true 
-            //    };
-            //    db.Utilizadores.Add(admin);
+            //criar base de dados
+            using (var db = new ITaskContext())
+            {
+                if (!db.Utilizadores.Any()) { 
+                    //definir admin
+                    var admin = new Gestor
+                    {
+                        Nome = "admin",
+                        Username = "admin",
+                        Password = "admin",
+                        Departamento = Departamento.Administração,
+                        GereUtilizadores = true
+                    };
+                    db.Utilizadores.Add(admin);
 
-            //    //difinir tipo tarefa
-            //    var tipoTarefa = new TipoTarefa { 
-            //        Nome = "Desenvolvimento" 
-            //    };
-            //    db.TiposTarefa.Add(tipoTarefa);
+                    //difinir tipo tarefa
+                    var tipoTarefa = new TipoTarefa
+                    {
+                        Nome = "Desenvolvimento"
+                    };
+                    db.TiposTarefa.Add(tipoTarefa);
 
-            //    //guardar as alterações
-            //    db.SaveChanges();
-            //}
-
+                    //guardar as alterações
+                    db.SaveChanges();
+                }
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             frmLogin frmLogin = new frmLogin();

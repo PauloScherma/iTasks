@@ -75,7 +75,6 @@ namespace iTasks.Controllers
                 return allTarefaList;
             }
         }
-
         public static List<Tarefa> mostrarDone()
         {
             using (var db = new ITaskContext())
