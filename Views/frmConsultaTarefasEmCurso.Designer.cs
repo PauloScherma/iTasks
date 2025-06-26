@@ -63,7 +63,7 @@
             this.Controls.Add(this.gvTarefasEmCurso);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmConsultaTarefasEmCurso";
-            this.Text = "frmConsultaTarefasEmCurso";
+            this.Text = "Consulta das Tarefas Em Curso";
             ((System.ComponentModel.ISupportInitialize)(this.gvTarefasEmCurso)).EndInit();
             this.ResumeLayout(false);
 
