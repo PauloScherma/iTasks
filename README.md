@@ -1,4 +1,4 @@
-# Projeto safeTalk
+# Projeto iTask
 
 ## Curso: PSI  
 ## Unidade Curricular: DA/MDS  
