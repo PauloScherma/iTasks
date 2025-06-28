@@ -1,12 +1,20 @@
-Projeto DA
---------
-Alunos: 
-Paulo António Scherma Pinto Nº 2241562 
-Miguel Costa Nº 2241612
+# Projeto safeTalk
 
-Execução do projeto:
-Para a inicialização do projeto apenas é necessária a execução do mesmo.
+## Curso: PSI  
+## Unidade Curricular: DA/MDS  
+## Ano Letivo: 2024/2025
 
-Dados de acesso:
-User- admin
-Password- admin
+## Descrição
+Aplicação que permite a gestão de projetos. 
+
+---
+
+## Elementos do grupo
+
+- Paulo Pinto – nº 2241562
+- Miguel Costa - nº 2241612
+
+---
+
+## Repositório do GitHub
+- https://github.com/PauloScherma/iTasks.git
